@@ -3,8 +3,47 @@
   <head>
     <meta charset="utf-8">
     <title>Dojo Bites</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {% load staticfiles %}
   </head>
   <body>
-    <h1>Dojo Bites</h1>
+      <div id="container">
+        <header>
+            <h1>Eat</h1>
+            <div><a href="{% url 'bites:new' %}">Add Restaurant</a> <a href="{%url 'users:logout' %}"><button>Logout</button></a></div>
+
+        </header>
+
+        {% if messages %}
+        <ul {% if message.tags %}class="{{message.tags}}"{% endif %}>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div id="main_content">
+            <div id="voting">
+                <table>
+                    <thead>
+                        <th>Name:</th>
+                        <th>Votes:</th>
+                    </thead>
+                    {% if restaurants %}
+                        {% for restaurant in restaurants %}
+                            <tr>
+                                <td>{{restaurant.name}}</td>
+                                <td><a href="{% url 'bites:vote' id=restaurant.id %}">Vote</a> <a href="{% url 'bites:unvote' id=restaurant.id %}">Unvote</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif%}
+                </table>
+            </div>
+            <h4>Comments:</h4>
+            {% if comments in dates %}
+                {co}
+            {% endif %}
+        </div> <!-- end main_content -->
+
+    </div>
   </body>
 </html>

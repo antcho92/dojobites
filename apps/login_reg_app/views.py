@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 def index(request):
     if 'user_id' in request.session:
-        return redirect(reverse('users:all'))
+        return redirect(reverse('bites:index'))
     else:
         return render(request, 'login_reg_app/index.html')
 
@@ -42,7 +42,7 @@ def log_user_in(request, user):
     request.session['user_id'] = user.id
     # add user to success flash message
     messages.success(request, "Welcome, {}. You are logged in.".format(user.first_name))
-    return redirect(reverse('users:all'))
+    return redirect(reverse('bites:index'))
 
 def logout(request):
     if 'user_id' in request.session:
