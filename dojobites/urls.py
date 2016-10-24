@@ -26,4 +26,5 @@ admin.site.register(User, UserAdmin)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include("apps.login_reg_app.urls", namespace="users")),
+    url(r'^bites/', include('apps.dojobites_app.urls', namespace='bites')),
 ]
