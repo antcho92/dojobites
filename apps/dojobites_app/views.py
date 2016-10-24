@@ -14,12 +14,12 @@ def index(request):
 
     return render(request, 'dojobites_app/index.html', context)
 
-def vote(request, restaurant_id):
+def join(request, restaurant_id):
 
 
     return redirect(reverse('bites:index'))
 
-def unvote (request, restaurant_id):
+def unjoin(request, restaurant_id):
 
     return redirect(reverse('bites:index'))
 
