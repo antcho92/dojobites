@@ -7,7 +7,7 @@
     <title>DojoBites Add Restaurants</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="{% url 'bites:create' %}" method="post"> {% csrf_token %}
         <p>Name:</p>
         <input type="text" name="name">
         <p>Description:</p>
@@ -22,8 +22,13 @@
             <option value="vietnamese">Vietnamese</option>
         </select>
         <p>Takeout:</p>
-        <input type="checkbox" name="takeout">Takeout allowed
+        <input type="checkbox" name="takeout" value="True">Takeout allowed
         <button type="submit">Submit</button>
     </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>

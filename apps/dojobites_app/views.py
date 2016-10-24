@@ -24,13 +24,18 @@ def unvote (request, restaurant_id):
     return redirect(reverse('bites:index'))
 
 def new(request):
-    return render(request, 'dojobites_app/new.html')
-
-def create(request):
-    if request.method == "POST":
-        Restaurant.objects.create(name=request.POST['name'], description=request.POST['description'],cuisine=request.POST['cuisine'],takeout=request.POST['takeout'],location='location')
     restaurants = Restaurant.objects.all()
     print "*"*70
     print "Restaurants:", restaurants.values()
     print "*"*70
-    return redirect(reverse('bites:index'))
+    return render(request, 'dojobites_app/new.html')
+
+def create(request):
+    if request.method == "POST":
+        result = Restaurant.objects.validate_restaurant(request.POST)
+        if result[0]:
+            messages.success(request, result[1])
+            return redirect(reverse('bites:index'))
+        for error in result[1]:
+            messages.error(request, error)
+    return redirect(reverse('bites:new'))
