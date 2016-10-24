@@ -27,12 +27,19 @@
                     <thead>
                         <th>Name:</th>
                         <th>Votes:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </thead>
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
                             <tr>
                                 <td>{{restaurant.name}}</td>
-                                <td><a href="{% url 'bites:join' id=restaurant.id %}">Join</a> <a href="{% url 'bites:unjoin' id=restaurant.id %}">Unjoin</a></td>
+                                <td>{{restaurant.description}}</td>
+                                <td>{{restaurant.cuisine}}</td>
+                                <td>{{restaurant.takeout}}</td>
+                                <td>{{restaurant.location}}</td>
+                                <td><a href="{% url 'bites:join' restaurant.id %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}

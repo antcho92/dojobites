@@ -9,18 +9,16 @@ def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {
-        "dates" : Date.objects.all()
+        "dates" : Date.objects.all(),
+        "restaurants" : Restaurant.objects.all()
     }
-
     return render(request, 'dojobites_app/index.html', context)
 
 def join(request, restaurant_id):
 
-
     return redirect(reverse('bites:index'))
 
 def unjoin(request, restaurant_id):
-
     return redirect(reverse('bites:index'))
 
 def new(request):

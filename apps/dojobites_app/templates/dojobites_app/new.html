@@ -7,6 +7,7 @@
     <title>DojoBites Add Restaurants</title>
 </head>
 <body>
+    <a href="{% url 'bites:index' %}">Go Back</a>
     <form action="{% url 'bites:create' %}" method="post"> {% csrf_token %}
         <p>Name:</p>
         <input type="text" name="name">
