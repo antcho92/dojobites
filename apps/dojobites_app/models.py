@@ -2,6 +2,19 @@ from __future__ import unicode_literals
 from ..login_reg_app.models import User
 from django.db import models
 
+class RestaurantManager(models.Manager):
+    def validate_restaurant(self, input):
+        errors = []
+        name = input['name']
+        desc = input['description']
+        if not name or name.isspace():
+            errors.append('Please enter the name!')
+        if not desc or desc.isspace():
+            errors.append('Please enter the description.')
+        if errors:
+            return (False, errors)
+        Restaurant.objects.create(name=name, description=desc, cuisine=input['cuisine'], takeout=input['takeout'], location='location')
+        return (True, "Restaurant Added!")
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
@@ -11,6 +24,7 @@ class Restaurant(models.Model):
     location = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = RestaurantManager()
 
 class Date(models.Model):
     date = models.DateTimeField()
