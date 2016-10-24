@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^unjoin/(?P<restaurant_id>\d+)$', views.unjoin, name='unjoin'),
     url(r'^new$', views.new, name='new'),
     url(r'^create$', views.create, name='create'),
+    url(r'^comment$', views.comment, name='comment'),
 
 ]

@@ -30,3 +30,9 @@ class Date(models.Model):
     date = models.DateTimeField()
     users = models.ManyToManyField(User, related_name='dates')
     restaurants = models.ManyToManyField(Restaurant, related_name='dates')
+
+class Message(models.Model):
+    content = models.TextField(max_length=2000)
+    date = models.ForeignKey(Date)
+    user = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True)

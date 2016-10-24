@@ -15,6 +15,7 @@ functionalities to implement:
 
 functions already implemented:
 1. login and registration
+2. added restaurant submission page
 
 current projects by member:
 tbd

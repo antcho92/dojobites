@@ -21,6 +21,11 @@ def join(request, restaurant_id):
 def unjoin(request, restaurant_id):
     return redirect(reverse('bites:index'))
 
+def comment(request):
+    if request.method=='POST':
+        print request.POST
+    return redirect(reverse('bites:index'))
+
 def new(request):
     restaurants = Restaurant.objects.all()
     print "*"*70
