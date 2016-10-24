@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from ..login_reg_app.models import User
-from .models import Restaurant, Date
+from .models import *
 
 
 def index(request):
@@ -21,4 +21,16 @@ def vote(request, restaurant_id):
 
 def unvote (request, restaurant_id):
 
+    return redirect(reverse('bites:index'))
+
+def new(request):
+    return render(request, 'dojobites_app/new.html')
+
+def create(request):
+    if request.method == "POST":
+        Restaurant.objects.create(name=request.POST['name'], description=request.POST['description'],cuisine=request.POST['cuisine'],takeout=request.POST['takeout'],location='location')
+    restaurants = Restaurant.objects.all()
+    print "*"*70
+    print "Restaurants:", restaurants.values()
+    print "*"*70
     return redirect(reverse('bites:index'))
