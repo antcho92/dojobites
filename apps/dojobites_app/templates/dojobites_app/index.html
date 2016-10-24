@@ -32,7 +32,7 @@
                         {% for restaurant in restaurants %}
                             <tr>
                                 <td>{{restaurant.name}}</td>
-                                <td><a href="{% url 'bites:vote' id=restaurant.id %}">Vote</a> <a href="{% url 'bites:unvote' id=restaurant.id %}">Unvote</a></td>
+                                <td><a href="{% url 'bites:join' id=restaurant.id %}">Join</a> <a href="{% url 'bites:unjoin' id=restaurant.id %}">Unjoin</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}
