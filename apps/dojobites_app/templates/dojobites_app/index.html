@@ -10,7 +10,7 @@
       <div id="container">
         <header>
             <h1>Eat</h1>
-            <div><a href="{% url 'bites:new' %}">Add Restaurant</a> <a href="{%url 'users:logout' %}"><button>Logout</button></a></div>
+            <div><a href="#">My Profile</a><a href="{% url 'bites:new' %}">Add Restaurant</a> <a href="{%url 'users:logout' %}"><button>Logout</button></a></div>
 
         </header>
 
@@ -21,7 +21,7 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <div id="main_content">
+        <main>
             <div id="voting">
                 <table>
                     <thead>
@@ -38,11 +38,24 @@
                     {% endif%}
                 </table>
             </div>
-            <h4>Comments:</h4>
-            {% if comments in dates %}
-                {co}
-            {% endif %}
-        </div> <!-- end main_content -->
+            <div id="comments">
+                <h3>Comments:</h3>
+                    {% if not comments %}
+                    <h5>Be the first to write a comment!</h5>
+                    {% endif %}
+                    {% if comments %}
+                        <ul>
+                            {% for comment in comments %}
+                            <li>{{comment.user}} says {{comment.content}}<br>{{comment.date}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <form action="/comment">
+                        <input type="text">
+                        <input type="submit" value="Submit">
+                    </form>
+            </div>
+        </main> <!-- end main_content -->
 
     </div>
   </body>

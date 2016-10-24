@@ -23,6 +23,11 @@ def unjoin(request, restaurant_id):
 
     return redirect(reverse('bites:index'))
 
+def comment(request):
+    if request.method=='POST':
+        print request.POST
+    return redirect(reverse('bites:index'))
+
 def new(request):
     return render(request, 'dojobites_app/new.html')
 
