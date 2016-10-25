@@ -6,7 +6,7 @@ functionalities to implement:
 2. voting ability for users (with random option)
 3. message board
 4. option information hover
-5. my profile/history page
+5. my profile/history page (stretch goal)
 6. calendar view
 7. sort by distance from codingdojo
 8. add embed functionality from Google maps API

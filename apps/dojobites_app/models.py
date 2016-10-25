@@ -31,6 +31,8 @@ class Date(models.Model):
     date = models.DateTimeField()
     users = models.ManyToManyField(User, related_name='dates')
     restaurants = models.ManyToManyField(Restaurant, related_name='dates')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):

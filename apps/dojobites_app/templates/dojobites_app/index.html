@@ -31,6 +31,10 @@
         {% endif %}
         <main>
             <div id="voting">
+               <!-- need a better way to show date here -->
+                {% if dates %}
+                  <time datetime='{{dates.0.date}}'>{{dates.0.date}}</time>
+                {% endif %}
                 <table>
                     <thead>
                         <th>Name:</th>
