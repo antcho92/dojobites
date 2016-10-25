@@ -52,7 +52,7 @@
                                 <td>{{restaurant.cuisine}}</td>
                                 <td>{{restaurant.takeout}}</td>
                                 <td>{{restaurant.location}}</td>
-                                <td><a href="{% url 'bites:join' restaurant.id %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                                <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}

@@ -66,7 +66,6 @@ class ChoiceManager(models.Manager):
             choice.users.add(user)
             return (True, "You made a choice!")
 
-
 class Choice(models.Model):
     date = models.DateTimeField()
     users = models.ManyToManyField(User, related_name='choices')
