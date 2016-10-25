@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+  </head>
+  <body>
+    <div id="container">
+      <header>
+          <h1>Eat</h1>
+          <div class="nav_bar">
+              <h4><a href="#">Where to Eat?</a></h4>
+              <h4><a href="#">What's Nearby?</a></h4>
+              <h4><a href="#">My Calendar</a></h4>
+              <h4><a href="#">My Profile</a></h4>
+              <h4><a href="{% url 'bites:new' %}">Add Restaurant</a></h4>
+              <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+          </div>
+
+      </header>
+      {% if messages %}
+      <ul class='messages'>
+          {% for message in messages %}
+              <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <main>
+        
+      </main>
+    </div>
+  </body>
+</html>

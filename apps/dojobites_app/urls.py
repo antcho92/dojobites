@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^new$', views.new, name='new'),
     url(r'^create$', views.create, name='create'),
     url(r'^comment$', views.comment, name='comment'),
+    url(r'^details/(?P<restaurant_id>\d+)$', views.details, name='details'),
 
 ]

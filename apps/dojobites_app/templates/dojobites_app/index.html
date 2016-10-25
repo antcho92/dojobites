@@ -42,7 +42,7 @@
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
                             <tr>
-                                <td>{{restaurant.name}}</td>
+                                <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name}}</a></td>
                                 <td>{{restaurant.description}}</td>
                                 <td>{{restaurant.cuisine}}</td>
                                 <td>{{restaurant.takeout}}</td>
@@ -59,9 +59,9 @@
                     <h5>Be the first to write a comment!</h5>
                     {% endif %}
                     {% if comments %}
-                        <ul>
+                        <ul class='comments'>
                             {% for comment in comments %}
-                            <li>{{comment.user.first_name}} says {{comment.content}}<br>{{comment.date.date}}</li>
+                            <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br>{{comment.date.date}}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}

@@ -47,3 +47,11 @@ def create(request):
         for error in result[1]:
             messages.error(request, error)
     return redirect(reverse('bites:new'))
+
+def details(request, restaurant_id):
+    restaurant = Restaurant.objects.get(id=restaurant_id)
+    context = {
+        'restaurant': restaurant,
+
+    }
+    return render(request, 'dojobites_app/details.html')
