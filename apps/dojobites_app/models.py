@@ -51,15 +51,7 @@ class CommentManager(models.Manager):
         return (True, "Comment added!")
 
 
-class Comment(models.Model):
-    content = models.TextField(max_length=2000)
-    # choice = models.ForeignKey(Choice)
-    user = models.ForeignKey(User)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    objects = CommentManager()
-    def __str__(self):
-        return self.content
+
 
 class Choice(models.Model):
     date = models.DateTimeField()
@@ -69,3 +61,13 @@ class Choice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.restaurant
+
+class Comment(models.Model):
+    content = models.TextField(max_length=2000)
+    choice = models.ForeignKey(Choice)
+    user = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = CommentManager()
+    def __str__(self):
+        return self.content
