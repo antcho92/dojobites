@@ -39,7 +39,8 @@
             <option value="vietnamese">Vietnamese</option>
         </select>
         <p>Takeout:</p>
-        <input type="checkbox" name="takeout" value="True">Takeout allowed
+        <input type="radio" name="takeout" value="True">Takeout allowed
+        <input type="radio" name="takeout" value="False">No takeout
         <button type="submit">Submit</button>
     </form>
     {% if messages %}

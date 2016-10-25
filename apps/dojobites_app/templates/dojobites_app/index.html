@@ -50,7 +50,7 @@
                                 <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name}}</a></td>
                                 <td>{{restaurant.description}}</td>
                                 <td>{{restaurant.cuisine}}</td>
-                                <td>{{restaurant.takeout}}</td>
+                                <td>{% if restaurant.takeout %}Yes{%else%}No{%endif%}</td>
                                 <td>{{restaurant.location}}</td>
                                 <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
                             </tr>
