@@ -14,9 +14,16 @@ def index(request):
     }
     return render(request, 'dojobites_app/index.html', context)
 
-def join(request, restaurant_id):
-    
-    return redirect(reverse('bites:index'))
+def join(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['user_id'])
+        validation = Choice.objects.addChoice(request.POST, user)
+        if validation[0]:
+            messages.success(request, validation[1])
+        else:
+            for error in validation[1]:
+                messages.error(request, error)
+    return redirect(reverse('bites:calendar'))
 
 def unjoin(request, restaurant_id):
     return redirect(reverse('bites:index'))
@@ -32,9 +39,6 @@ def comment(request):
 
 def new(request):
     restaurants = Restaurant.objects.all()
-    print "*"*70
-    print "Restaurants:", restaurants.values()
-    print "*"*70
     return render(request, 'dojobites_app/new.html')
 
 def create(request):

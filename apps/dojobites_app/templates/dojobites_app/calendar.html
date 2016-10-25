@@ -19,10 +19,19 @@
             <a href="{%url 'users:logout' %}"><button>Logout</button></a>
         </div>
     </header>
-    <form class="" action="{% url 'bites:join' %}" method="post">
+    {% if messages %}
+    <ul class='messages'>
+        {% for message in messages %}
+            <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form class="" action="/bites/join" method="post">
+      {% csrf_token %}
       Choose your date: <input type="date" name="date" value="">
       <select class="" name="restaurant">
-        <option value="" disabled selected>Restaurant</option>
+        <option value=""></option>
+        <!-- <option value="" disabled selected>Restaurant</option> -->
         {% if restaurants %}
           {% for restaurant in restaurants %}
             <option value="{{restaurant.id}}">{{restaurant.name}}</option>

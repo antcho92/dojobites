@@ -30,13 +30,6 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
-# class Date(models.Model):
-#     date = models.DateTimeField()
-#     users = models.ManyToManyField(User, related_name='dates')
-#     restaurants = models.ManyToManyField(Restaurant, related_name='dates')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):
         errors = []
@@ -50,7 +43,28 @@ class CommentManager(models.Manager):
         Comment.objects.create(content=content, date=date, user=user)
         return (True, "Comment added!")
 
+class ChoiceManager(models.Manager):
+    def addChoice(self, input, user):
+        errors = []
+        print(datetime.today())
+        print(input['restaurant'])
+        if not input['restaurant'] or not input['date']:
+            errors.append("Must choose and date and restaurant")
+        if len(input['date']) > 0:
+            date = datetime.strptime(input['date'], "%Y-%m-%d").date()
+            print(date)
 
+            if datetime.today().date() > date:
+                errors.append("Meal date must be in the future")
+        if errors:
+            return (False, errors)
+        else:
+            print(type(input['restaurant']))
+            restaurant_id = input['restaurant']
+            restaurant = Restaurant.objects.get(id=restaurant_id)
+            choice = Choice.objects.create(date=date, restaurant=restaurant)
+            choice.users.add(user)
+            return (True, "You made a choice!")
 
 
 class Choice(models.Model):
@@ -59,8 +73,9 @@ class Choice(models.Model):
     restaurant = models.ForeignKey(Restaurant)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    def __str__(self):
-        return self.restaurant
+    # def __str__(self):
+    #     return self.restaurant + self.users.all
+    objects = ChoiceManager()
 
 class Comment(models.Model):
     content = models.TextField(max_length=2000)
