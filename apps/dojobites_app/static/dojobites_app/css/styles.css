@@ -19,9 +19,23 @@ main{
     border: 1px solid black;
     margin: 20px;
     max-height: 400px;
+    width: 1200px;
     display: inline-block;
     padding: 5px 10px 5px 10px;
 }
+    #choice, #comments, table {
+        outline: 1px dashed gray;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 30px;
+    }
+    #choice {
+        width: 300px;
+        font-size: 1em;
+    }
+        #choice input {
+            font-size: 1.2em;
+        }
 thead{
     border-bottom: black 2px solid;
 }
@@ -40,7 +54,6 @@ table{
 }
 #comments{
     display: inline-block;
-    border: 10px pink dotted;
     min-height: 400px;
     margin: 5px;
 }

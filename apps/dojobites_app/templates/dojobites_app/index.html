@@ -33,10 +33,32 @@
             <h2>Join a group!</h2>
             <div id="voting">
                <!-- need a better way to show date here -->
-                {% if dates %}
-                  <time datetime='{{dates.0.date}}'>{{dates.0.date}}</time>
-                {% endif %}
-                <table>
+                <div id="choice">
+                    <label>Select Date:</label>
+                    <input type="date" name="date">
+                    <ul>
+
+                        <li></li>
+
+                    </ul>
+                </div>
+                <div id="comments">
+                    <h3>Comments:</h3>
+                        {% if not comments %}
+                            <h5>Be the first to write a comment!</h5>
+                        {% else %}
+                            <ul class='comments'>
+                                {% for comment in comments %}
+                                <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    <form action="{% url 'bites:comment' %}" method="POST"> {% csrf_token %}
+                        <input type="text" name="content">
+                        <input type="submit" value="Submit">
+                    </form>
+               </div>
+               <table>
                     <thead>
                         <th>Name:</th>
                         <th>Description:</th>
@@ -52,30 +74,13 @@
                                 <td>{{restaurant.cuisine}}</td>
                                 <td>{{restaurant.takeout}}</td>
                                 <td>{{restaurant.location}}</td>
-                                <td><a href="{% url 'bites:join' restaurant.id %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                                <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}
                 </table>
             </div> <!-- end of voting -->
-            <div id="comments">
-                <h3>Comments:</h3>
-                    {% if not comments %}
-                    <h5>Be the first to write a comment!</h5>
-                    {% endif %}
-                    {% if comments %}
-                        <ul class='comments'>
-                            {% for comment in comments %}
-                            <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    <form action="{% url 'bites:comment' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="text" name="content">
-                        <input type="submit" value="Submit">
-                    </form>
-            </div>
+
         </main> <!-- end main_content -->
 
     </div>
