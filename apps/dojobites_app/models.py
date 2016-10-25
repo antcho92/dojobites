@@ -3,6 +3,7 @@ from ..login_reg_app.models import User
 from django.db import models
 from datetime import datetime
 
+
 class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
         errors = []
@@ -26,6 +27,8 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = RestaurantManager()
+    def __str__(self):
+        return self.name
 
 class Date(models.Model):
     date = models.DateTimeField()
@@ -53,4 +56,15 @@ class Comment(models.Model):
     date = models.ForeignKey(Date)
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = CommentManager()
+    def __str__(self):
+        return self.content
+class choice(models.Model):
+    date = models.ForeignKey(Date)
+    user = models.ForeignKey(User)
+    restaurant = models.ForeignKey(Restaurant)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.restaurant
