@@ -15,7 +15,7 @@ def index(request):
     return render(request, 'dojobites_app/index.html', context)
 
 def join(request, restaurant_id):
-
+    
     return redirect(reverse('bites:index'))
 
 def unjoin(request, restaurant_id):
@@ -54,3 +54,9 @@ def details(request, restaurant_id):
         #need to add query lookup for users but first need to add join functionality
     }
     return render(request, 'dojobites_app/details.html', context)
+def calendar(request):
+    restaurants = Restaurant.objects.all()
+    context = {
+        'restaurants': restaurants
+    }
+    return render(request, 'dojobites_app/calendar.html', context)
