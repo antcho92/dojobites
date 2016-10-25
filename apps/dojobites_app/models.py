@@ -30,12 +30,12 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
-class Date(models.Model):
-    date = models.DateTimeField()
-    users = models.ManyToManyField(User, related_name='dates')
-    restaurants = models.ManyToManyField(Restaurant, related_name='dates')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+# class Date(models.Model):
+#     date = models.DateTimeField()
+#     users = models.ManyToManyField(User, related_name='dates')
+#     restaurants = models.ManyToManyField(Restaurant, related_name='dates')
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):
@@ -53,16 +53,17 @@ class CommentManager(models.Manager):
 
 class Comment(models.Model):
     content = models.TextField(max_length=2000)
-    date = models.ForeignKey(Date)
+    # choice = models.ForeignKey(Choice)
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = CommentManager()
     def __str__(self):
         return self.content
-class choice(models.Model):
-    date = models.ForeignKey(Date)
-    user = models.ForeignKey(User)
+
+class Choice(models.Model):
+    date = models.DateTimeField()
+    users = models.ManyToManyField(User, related_name='choices')
     restaurant = models.ForeignKey(Restaurant)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

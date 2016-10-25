@@ -9,7 +9,6 @@ def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {
-        "dates" : Date.objects.all(),
         "restaurants" : Restaurant.objects.all(),
         "comments": Comment.objects.all(),
     }
