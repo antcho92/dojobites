@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from ..login_reg_app.models import User
 from django.db import models
+from datetime import datetime
 
 class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
@@ -34,13 +35,14 @@ class Date(models.Model):
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):
         errors = []
-        users = user_id
+        user = User.objects.get(id=user_id)
+        date = Date.objects.create(date=datetime.now())
         content = input['content']
         if not content or content.isspace():
             errors.append('Please input a valid comment! (Only whitespace is not valid...)')
         if errors:
             return (False, errors)
-        Comment.objects.create(content=content, date=1, user=user_id)
+        Comment.objects.create(content=content, date=date, user=user)
         return (True, "Comment added!")
 
 

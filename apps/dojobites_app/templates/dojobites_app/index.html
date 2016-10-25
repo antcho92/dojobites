@@ -23,9 +23,9 @@
         </header>
 
         {% if messages %}
-        <ul {% if message.tags %}class="{{message.tags}}"{% endif %}>
+        <ul class='messages'>
             {% for message in messages %}
-                <li>{{message}}</li>
+                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
             {% endfor %}
         </ul>
         {% endif %}
@@ -61,7 +61,7 @@
                     {% if comments %}
                         <ul>
                             {% for comment in comments %}
-                            <li>{{comment.user}} says {{comment.content}}<br>{{comment.date}}</li>
+                            <li>{{comment.user.first_name}} says {{comment.content}}<br>{{comment.date.date}}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
