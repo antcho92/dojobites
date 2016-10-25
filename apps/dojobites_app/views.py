@@ -10,7 +10,8 @@ def index(request):
         return redirect(reverse('users:index'))
     context = {
         "dates" : Date.objects.all(),
-        "restaurants" : Restaurant.objects.all()
+        "restaurants" : Restaurant.objects.all(),
+        # "comments": Comment.objects.all(),
     }
     return render(request, 'dojobites_app/index.html', context)
 
@@ -23,7 +24,7 @@ def unjoin(request, restaurant_id):
 
 def comment(request):
     if request.method=='POST':
-        print request.POST
+        Comment.objects.validate_comment(request.POST, request.session['user_id'])
     return redirect(reverse('bites:index'))
 
 def new(request):

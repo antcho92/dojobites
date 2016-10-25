@@ -1,0 +1,46 @@
+.nav_bar{
+    border: 2px solid black;
+    justify-content: space-around;
+    display: inline-flex;
+    width: 100%
+}
+header h4{
+    margin: 10px;
+}
+header button{
+    margin: 10px;
+}
+main{
+    border: 1px solid black;
+    margin-top: 10px;
+    width:100%;
+}
+#voting{
+    border: 1px solid black;
+    margin: 20px;
+    max-height: 400px;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+}
+thead{
+    border-bottom: black 2px solid;
+}
+
+th{
+    margin: 0px;
+    padding: 5px 10px 5px 10px;
+    border-bottom: 1px black solid;
+}
+
+td{
+    border-bottom: 1px black solid;
+}
+table{
+    border-collapse: collapse;
+}
+#comments{
+    display: inline-block;
+    border: 10px pink dotted;
+    min-height: 400px;
+    margin: 5px;
+}
