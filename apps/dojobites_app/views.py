@@ -6,9 +6,6 @@ from .models import *
 
 
 def index(request):
-    print "*"*80
-    print "Choices:",Choice.objects.all().values('id','date','users','restaurant')
-    print "*"*80
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {

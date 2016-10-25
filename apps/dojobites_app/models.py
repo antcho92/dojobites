@@ -46,24 +46,25 @@ class CommentManager(models.Manager):
 class ChoiceManager(models.Manager):
     def addChoice(self, input, user):
         errors = []
-        print "*"*70
-        print datetime.today().date()
-        print "*"*70
+        print(datetime.today())
+        print(input['restaurant'])
         if not input['restaurant'] or not input['date']:
             errors.append("Must choose and date and restaurant")
-        elif input['date']:
+        if len(input['date']) > 0:
             date = datetime.strptime(input['date'], "%Y-%m-%d").date()
-            print "DATE:", date
-            if datetime.today().date() >= date:
+            print(date)
+
+            if datetime.today().date() > date:
                 errors.append("Meal date must be in the future")
         if errors:
             return (False, errors)
         else:
-            restaurant = Restaurant.objects.get(id=input['restaurant'])
+            print(type(input['restaurant']))
+            restaurant_id = input['restaurant']
+            restaurant = Restaurant.objects.get(id=restaurant_id)
             choice = Choice.objects.create(date=date, restaurant=restaurant)
             choice.users.add(user)
             return (True, "You made a choice!")
-
 
 class Choice(models.Model):
     date = models.DateTimeField()
