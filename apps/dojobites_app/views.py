@@ -52,6 +52,6 @@ def details(request, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     context = {
         'restaurant': restaurant,
-
+        #need to add query lookup for users but first need to add join functionality
     }
-    return render(request, 'dojobites_app/details.html')
+    return render(request, 'dojobites_app/details.html', context)
