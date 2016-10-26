@@ -59,18 +59,21 @@ def create(request):
 def details(request, restaurant_id, date):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     print(date)
-    choices = Choice.objects.filter(date=date, restaurant=restaurant)
+    choice = Choice.objects.get(date=date, restaurant=restaurant)
+    print(choice.users.all)
     context = {
         'restaurant': restaurant,
-        'choices': choices
+        'choice': choice
     }
     return render(request, 'dojobites_app/details.html', context)
 
 def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
-        choices = Choice.objects.filter(date=date).order_by('-id')
-        restaurants = Restaurant.objects.filter(choices__date=date).annotate(number_of_users=Count('choices'))
+        # choices = Choice.objects.filter(date=date).order_by('-id')
+        # for choice in choices:
+        #     choice.annotate(number_of_users=Count('users')
+        restaurants = Restaurant.objects.filter(choices__date=date)#.annotate(number_of_users=Count('choices'))
         for restaurant in restaurants:
             print(restaurant.count(choices))
         context = {

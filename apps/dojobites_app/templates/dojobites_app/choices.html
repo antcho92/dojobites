@@ -11,3 +11,16 @@
 </ul>
 {% endfor %}
 {% endif %}
+{% if choices %}
+  {% for choice in choices %}
+  <ul>
+      <li>-----------{{ forloop.counter }}------------</li>
+      <!-- <li><a href="{% url 'bites:details' restaurant_id=restaurant.id date=date %}">{{ restaurant.name|title }}</a></li> -->
+      <li> {{choice.restaurant.name }}</li>
+      <li>{{ choice.restaurant.cuisine|title }}</li>
+      <li>{{ choice.restaurant.description }}</li>
+      <li>{{ choice.restaurant.location }}</li>
+      <li>{{ choice.users.all }}</li>
+  </ul>
+  {% endfor %}
+{% endif %}
