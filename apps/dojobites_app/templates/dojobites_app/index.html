@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dojo Bites</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <script>
+        $(document).ready(function() {
+            $("input#date").change(function() {
+                var date = $(this).val().replace(/\s/g,'');
+                if(date) {
+                    $.ajax({
+                        method : 'post',
+                        url : $('form#date').attr('action'),  // '/bites/show/choice'
+                        data : $('form#date').serialize(),
+                        success : function(resp){
+                                      $('div#choices').html(resp)
+                                  }
+                    })
+                }
+            })
+        })
+    </script>
   </head>
   <body>
       <div id="container">
@@ -19,9 +38,7 @@
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
                 <a href="{%url 'users:logout' %}"><button>Logout</button></a>
             </div>
-
         </header>
-
         {% if messages %}
         <ul class='messages'>
             {% for message in messages %}
@@ -30,12 +47,31 @@
         </ul>
         {% endif %}
         <main>
-            <h2>Join a group!</h2>
+            <h3>Join a group! {{ user.first_name|title }}</h3>
             <div id="voting">
-               <!-- need a better way to show date here -->
-                {% if dates %}
-                  <time datetime='{{dates.0.date}}'>{{dates.0.date}}</time>
-                {% endif %}
+                <div id="choice">
+                    <form id="date" action="{% url 'bites:show_choice' %}" method="post"> {% csrf_token %}
+                        <label>Select a Date:</label>
+                        <input id="date" name="date" type="date">
+                    </form>
+                    <div id="choices"></div>
+                </div>
+                <div id="comments">
+                    <h3>Comments:</h3>
+                    {% if not comments %}
+                        <h5>Be the first to write a comment!</h5>
+                    {% else %}
+                        <ul class='comments'>
+                        {% for comment in comments %}
+                            <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <form action="{% url 'bites:comment' %}" method="POST"> {% csrf_token %}
+                        <input type="text" name="content">
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
                 <table>
                     <thead>
                         <th>Name:</th>
@@ -58,26 +94,7 @@
                     {% endif%}
                 </table>
             </div> <!-- end of voting -->
-            <div id="comments">
-                <h3>Comments:</h3>
-                    {% if not comments %}
-                    <h5>Be the first to write a comment!</h5>
-                    {% endif %}
-                    {% if comments %}
-                        <ul class='comments'>
-                            {% for comment in comments %}
-                            <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    <form action="{% url 'bites:comment' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="text" name="content">
-                        <input type="submit" value="Submit">
-                    </form>
-            </div>
         </main> <!-- end main_content -->
-
     </div>
   </body>
 </html>

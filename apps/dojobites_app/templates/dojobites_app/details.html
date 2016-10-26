@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Restaurant Details</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
-  </head>
-  <body>
+</head>
+<body>
     <div id="container">
-      <header>
-          <h1>Dojo Bites</h1>
-          <div class="nav_bar">
-              <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
-              <h4><a href="#">What's Nearby?</a></h4>
-              <h4><a href="#">My Calendar</a></h4>
-              <h4><a href="#">My Profile</a></h4>
-              <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-              <a href="{%url 'users:logout' %}"><button>Logout</button></a>
-          </div>
-
-      </header>
-      {% if messages %}
-      <ul class='messages'>
-          {% for message in messages %}
-              <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
-          {% endfor %}
-      </ul>
-      {% endif %}
-      <main>
+        <header>
+            <h1>Dojo Bites</h1>
+            <div class="nav_bar">
+                <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
+                <h4><a href="#">What's Nearby?</a></h4>
+                <h4><a href="#">My Calendar</a></h4>
+                <h4><a href="#">My Profile</a></h4>
+                <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
+                <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+            </div>
+        </header>
+        {% if messages %}
+        <ul class='messages'>
+            {% for message in messages %}
+                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <main>
         {% if restaurant %}
-          <h2>{{restaurant.name}}</h2>
-          <ul class='restaurant_details'>
-            <li>Cuisine: {{restaurant.cuisine}}</li>
-            <li>Description: {{restaurant.description}}</li>
-            <li>Takeout option? {% if restaurant.takeout %}Yes{%else%}No{%endif%}</li>
-          </ul>
+            <h2>{{restaurant.name}}</h2>
+            <ul class='restaurant_details'>
+                <li>Cuisine: {{restaurant.cuisine}}</li>
+                <li>Description: {{restaurant.description}}</li>
+                <li>Takeout option? {% if restaurant.takeout %}Yes{%else%}No{%endif%}</li>
+            </ul>
         {% endif %}
         <h3>Users who are planning to go here:</h3>
-          {% if users %}
+        {% if users %}
             <ul>
-              {% for user in users %}
-              <li>{{user.name}}</li>
-              {% endfor %}
+                {% for user in users %}
+                <li>{{user.name}}</li>
+                {% endfor %}
             </ul>
-          {% endif %}
-      </main>
+        {% endif %}
+        </main>
     </div>
-  </body>
+</body>
 </html>
