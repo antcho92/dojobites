@@ -56,13 +56,10 @@ def create(request):
             messages.error(request, error)
     return redirect(reverse('bites:new'))
 
-def details(request, restaurant_id, date):
-    restaurant = Restaurant.objects.get(id=restaurant_id)
-    print(date)
-    choice = Choice.objects.get(date=date, restaurant=restaurant)
+def details(request, choice_id):
+    choice = Choice.objects.get(id=choice_id)
     print(choice.users.all)
     context = {
-        'restaurant': restaurant,
         'choice': choice
     }
     return render(request, 'dojobites_app/details.html', context)

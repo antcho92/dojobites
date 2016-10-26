@@ -30,17 +30,12 @@
         </ul>
         {% endif %}
         <main>
-        {% if restaurant %}
-            <h2>{{restaurant.name}}</h2>
+        {% if course %}
+            <h2>{{course.restaurant.name}}</h2>
             <ul class='restaurant_details'>
-                <li>Cuisine: {{restaurant.cuisine}}</li>
-                <li>Description: {{restaurant.description}}</li>
-                <li>Takeout option? {% if restaurant.takeout %}Yes{%else%}No{%endif%}</li>
-            </ul>
-        {% endif %}
-        <h3>Users who are planning to go here:</h3>
-        {% if choice %}
-            <ul>
+                <li>Cuisine: {{course.restaurant.cuisine}}</li>
+                <li>Description: {{course.restaurant.description}}</li>
+                <li>Takeout option? {% if course.restaurant.takeout %}Yes{%else%}No{%endif%}</li>
                 {% for user in choices %}
                 <li>{{user}}</li>
                 {% endfor %}

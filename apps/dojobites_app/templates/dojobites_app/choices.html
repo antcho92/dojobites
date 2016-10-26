@@ -2,6 +2,7 @@
   {% for choice in choices %}
   <ul>
       <li>-----------{{ forloop.counter }}------------</li>
+      <li><a href="{% url 'bites:details' choice_id=choice.id %}">{{ choice.restaurant.name|title }}</a></li>
       <li> {{choice.restaurant.name }}</li>
       <li>{{ choice.restaurant.cuisine|title }}</li>
       <li>{{ choice.restaurant.description }}</li>
