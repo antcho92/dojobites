@@ -28,6 +28,10 @@ class Restaurant(models.Model):
     objects = RestaurantManager()
     def __str__(self):
         return self.name
+    def count(self, choices):
+        return len(choices.filter(restaurant=self))
+    def attendees(self, choices, ):
+        pass
 
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):
@@ -57,6 +61,9 @@ class ChoiceManager(models.Manager):
             return (False, errors)
         else:
             r = Restaurant.objects.get(id=rest_id)
+            if Choice.objects.filter(date=date, restaurant=r):
+                return (False, "You have already made your choice today!")
+
             choice = Choice.objects.create(date=date, restaurant=r)
             choice.users.add(user)
             return (True, "You made a choice!")
@@ -64,7 +71,7 @@ class ChoiceManager(models.Manager):
 class Choice(models.Model):
     date = models.DateField()
     users = models.ManyToManyField(User, related_name='choices')
-    restaurant = models.ForeignKey(Restaurant)
+    restaurant = models.ForeignKey(Restaurant, related_name='choices')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # def __str__(self):

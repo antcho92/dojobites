@@ -7,9 +7,9 @@ from django.db.models import Count
 from datetime import datetime
 
 def index(request):
-    print "*"*70
-    print "Choice:", Choice.objects.values('id', 'users', 'restaurant', 'date')
-    print "*"*70
+    # print "*"*70
+    # print "Choice:", Choice.objects.values('id', 'users', 'restaurant', 'date')
+    # print "*"*70
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {
@@ -68,10 +68,21 @@ def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
         choices = Choice.objects.filter(date=date).order_by('-id')
+        restaurants = Restaurant.objects.filter(choices__date=date).annotate(number_of_users=Count('choices'))
+        for restaurant in restaurants:
+            print(restaurant.count(choices))
+        # for restaurant in restaurants:
+        #     restaurant.
+        #     if choice.restaurant.id == restaurant.id:
+        #
         # print "*"*70
         # print choices.values('id', 'users', 'restaurant', 'date')
         # print "*"*70
-    return render(request, 'dojobites_app/choices.html', {'choices' : choices})
+        context = {
+            'choices': choices,
+            'restaurants': restaurants
+        }
+    return render(request, 'dojobites_app/choices.html', context)
 
 def calendar(request):
     restaurants = Restaurant.objects.all()

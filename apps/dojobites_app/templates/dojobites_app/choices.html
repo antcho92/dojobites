@@ -1,19 +1,13 @@
-{% if choices %}
-{% for choice in choices %}
+
+{% if restaurants %}
+{% for restaurant in restaurants %}
 <ul>
     <li>-----------{{ forloop.counter }}------------</li>
-    <li>{{ choice.restaurant.name|title }}</li>
-    <li>{{ choice.restaurant.cuisine|title }}</li>
-    <li>{{ choice.restaurant.description }}</li>
-    <li>{{ choice.restaurant.location }}</li>
-    <li>{{ choice.date }}</li>
-    <li>
-        <ol>
-        {% for user in choice.users.all|dictsort:"first_name" %}
-            <li value="{{ user.id }}">{{ user.first_name|title }} {{ user.last_name|title }}</li>
-        {% endfor %}
-        </ol>
-    </li>
+    <li>{{ restaurant.name|title }}</li>
+    <li>{{ restaurant.cuisine|title }}</li>
+    <li>{{ restaurant.description }}</li>
+    <li>{{ restaurant.location }}</li>
+    <li>{{ restaurant.number_of_users }}</li>
 </ul>
 {% endfor %}
 {% endif %}
