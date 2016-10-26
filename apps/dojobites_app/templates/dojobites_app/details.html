@@ -39,10 +39,10 @@
             </ul>
         {% endif %}
         <h3>Users who are planning to go here:</h3>
-        {% if users %}
+        {% if choices %}
             <ul>
-                {% for user in users %}
-                <li>{{user.name}}</li>
+                {% for choice in choices %}
+                <li>{{choice.users.all.first_name}}</li>
                 {% endfor %}
             </ul>
         {% endif %}

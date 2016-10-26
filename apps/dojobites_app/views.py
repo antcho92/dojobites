@@ -56,11 +56,13 @@ def create(request):
             messages.error(request, error)
     return redirect(reverse('bites:new'))
 
-def details(request, restaurant_id):
+def details(request, restaurant_id, date):
     restaurant = Restaurant.objects.get(id=restaurant_id)
+    print(date)
+    choices = Choice.objects.filter(date=date, restaurant=restaurant)
     context = {
         'restaurant': restaurant,
-        #need to add query lookup for users but first need to add join functionality
+        'choices': choices
     }
     return render(request, 'dojobites_app/details.html', context)
 
@@ -71,16 +73,10 @@ def show_choice(request):
         restaurants = Restaurant.objects.filter(choices__date=date).annotate(number_of_users=Count('choices'))
         for restaurant in restaurants:
             print(restaurant.count(choices))
-        # for restaurant in restaurants:
-        #     restaurant.
-        #     if choice.restaurant.id == restaurant.id:
-        #
-        # print "*"*70
-        # print choices.values('id', 'users', 'restaurant', 'date')
-        # print "*"*70
         context = {
             'choices': choices,
-            'restaurants': restaurants
+            'restaurants': restaurants,
+            'date': date
         }
     return render(request, 'dojobites_app/choices.html', context)
 

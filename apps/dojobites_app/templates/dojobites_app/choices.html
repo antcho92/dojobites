@@ -3,7 +3,7 @@
 {% for restaurant in restaurants %}
 <ul>
     <li>-----------{{ forloop.counter }}------------</li>
-    <li>{{ restaurant.name|title }}</li>
+    <li><a href="{% url 'bites:details' restaurant_id=restaurant.id date=date %}">{{ restaurant.name|title }}</a></li>
     <li>{{ restaurant.cuisine|title }}</li>
     <li>{{ restaurant.description }}</li>
     <li>{{ restaurant.location }}</li>

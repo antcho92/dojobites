@@ -28,10 +28,9 @@ class Restaurant(models.Model):
     objects = RestaurantManager()
     def __str__(self):
         return self.name
+    # this method doesn't work in the templates :(
     def count(self, choices):
         return len(choices.filter(restaurant=self))
-    def attendees(self, choices, ):
-        pass
 
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):

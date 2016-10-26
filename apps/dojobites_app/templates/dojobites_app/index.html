@@ -83,7 +83,7 @@
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
                             <tr>
-                                <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name}}</a></td>
+                                <td>{{restaurant.name}}</td>
                                 <td>{{restaurant.description}}</td>
                                 <td>{{restaurant.cuisine}}</td>
                                 <td>{{restaurant.takeout}}</td>
