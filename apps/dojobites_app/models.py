@@ -60,11 +60,20 @@ class ChoiceManager(models.Manager):
             return (False, errors)
         else:
             r = Restaurant.objects.get(id=rest_id)
-            if Choice.objects.filter(date=date, restaurant=r):
-                return (False, "You have already made your choice today!")
-
-            choice = Choice.objects.create(date=date, restaurant=r)
+            choices = Choice.objects.filter(date=date)
+            for choice in choices:
+                print(choice.users.all())
+                if user in choice.users.all():
+                    print("You already made a choice")
+                    errors.append("You have already made your choice today!")
+                    return (False, errors)
+            try:
+                choice = Choice.objects.get(date=date, restaurant=r)
+            #should add a specific exception... aka if the choice doesn't exist in db yet
+            except:
+                choice = Choice.objects.create(date=date, restaurant=r)
             choice.users.add(user)
+
             return (True, "You made a choice!")
 
 class Choice(models.Model):
@@ -74,7 +83,7 @@ class Choice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # def __str__(self):
-    #     return self.restaurant + self.users.all
+    #     return self.restaurant + " " +  self.date
     objects = ChoiceManager()
 
 class Comment(models.Model):
