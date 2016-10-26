@@ -38,3 +38,7 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
+
+$(document).ready(function() {
+
+});
