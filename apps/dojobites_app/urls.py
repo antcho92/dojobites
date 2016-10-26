@@ -1,14 +1,15 @@
 from django.conf.urls import url
-from . import views
+from .views import *
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^join$', views.join, name='join'),
-    url(r'^unjoin/(?P<restaurant_id>\d+)$', views.unjoin, name='unjoin'),
-    url(r'^new$', views.new, name='new'),
-    url(r'^create$', views.create, name='create'),
-    url(r'^comment$', views.comment, name='comment'),
-    url(r'^details/(?P<restaurant_id>\d+)$', views.details, name='details'),
-    url(r'^calendar$', views.calendar, name='calendar'),
+    url(r'^$', index, name='index'),
+    url(r'^join$', join, name='join'),
+    url(r'^unjoin/(?P<restaurant_id>\d+)$', unjoin, name='unjoin'),
+    url(r'^new$', new, name='new'),
+    url(r'^create$', create, name='create'),
+    url(r'^comment$', comment, name='comment'),
+    url(r'^show/choice$', show_choice, name='show_choice'),
+    url(r'^details/(?P<restaurant_id>\d+)$', details, name='details'),
+    url(r'^calendar$', calendar, name='calendar'),
 
 ]

@@ -3,7 +3,6 @@ from ..login_reg_app.models import User
 from django.db import models
 from datetime import datetime
 
-
 class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
         errors = []
@@ -46,28 +45,24 @@ class CommentManager(models.Manager):
 class ChoiceManager(models.Manager):
     def addChoice(self, input, user):
         errors = []
-        print(datetime.today())
-        print(input['restaurant'])
-        if not input['restaurant'] or not input['date']:
+        date = input['date']
+        rest_id = input['restaurant']
+        if not rest_id or not date:
             errors.append("Must choose and date and restaurant")
-        if len(input['date']) > 0:
-            date = datetime.strptime(input['date'], "%Y-%m-%d").date()
-            print(date)
-
-            if datetime.today().date() > date:
+        if rest_id and date:
+            today = datetime.now().strftime('%Y-%m-%d')
+            if date <= today:
                 errors.append("Meal date must be in the future")
         if errors:
             return (False, errors)
         else:
-            print(type(input['restaurant']))
-            restaurant_id = input['restaurant']
-            restaurant = Restaurant.objects.get(id=restaurant_id)
-            choice = Choice.objects.create(date=date, restaurant=restaurant)
+            r = Restaurant.objects.get(id=rest_id)
+            choice = Choice.objects.create(date=date, restaurant=r)
             choice.users.add(user)
             return (True, "You made a choice!")
 
 class Choice(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     users = models.ManyToManyField(User, related_name='choices')
     restaurant = models.ForeignKey(Restaurant)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -83,5 +78,5 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = CommentManager()
-    def __str__(self):
-        return self.content
+    # def __str__(self):
+    #     return self.content

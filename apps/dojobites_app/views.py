@@ -3,14 +3,19 @@ from django.contrib import messages
 from django.urls import reverse
 from ..login_reg_app.models import User
 from .models import *
-
+from django.db.models import Count
+from datetime import datetime
 
 def index(request):
+    print "*"*70
+    print "Choice:", Choice.objects.values('id', 'users', 'restaurant', 'date')
+    print "*"*70
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {
         "restaurants" : Restaurant.objects.all(),
         "comments": Comment.objects.all(),
+        "user" : User.objects.get(id=request.session['user_id'])
     }
     return render(request, 'dojobites_app/index.html', context)
 
@@ -58,6 +63,16 @@ def details(request, restaurant_id):
         #need to add query lookup for users but first need to add join functionality
     }
     return render(request, 'dojobites_app/details.html', context)
+
+def show_choice(request):
+    if request.method == 'POST':
+        date = request.POST['date']
+        choices = Choice.objects.filter(date=date).order_by('-id')
+        # print "*"*70
+        # print choices.values('id', 'users', 'restaurant', 'date')
+        # print "*"*70
+    return render(request, 'dojobites_app/choices.html', {'choices' : choices})
+
 def calendar(request):
     restaurants = Restaurant.objects.all()
     context = {
