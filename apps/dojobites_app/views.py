@@ -70,7 +70,7 @@ def details(request, restaurant_id, date):
 def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
-        # choices = Choice.objects.filter(date=date).order_by('-id')
+        choices = Choice.objects.filter(date=date).order_by('-id')
         # for choice in choices:
         #     choice.annotate(number_of_users=Count('users')
         restaurants = Restaurant.objects.filter(choices__date=date)#.annotate(number_of_users=Count('choices'))
