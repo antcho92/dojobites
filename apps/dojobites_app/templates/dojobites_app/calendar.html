@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Calendar</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
-  </head>
-  <body>
+</head>
+<body>
     <header>
         <h1>Dojo Bites Calendar</h1>
         <div class="nav_bar">
@@ -26,19 +28,17 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form class="" action="/bites/join" method="post">
-      {% csrf_token %}
-      Choose your date: <input type="date" name="date" value="">
-      <select class="" name="restaurant">
-        <option value=""></option>
-        <!-- <option value="" disabled selected>Restaurant</option> -->
-        {% if restaurants %}
-          {% for restaurant in restaurants %}
-            <option value="{{restaurant.id}}">{{restaurant.name}}</option>
-          {% endfor %}
-        {% endif %}
-      </select>
-      <input type="submit" name="submit" value="Choose">
+    <form class="" action="/bites/join" method="post"> {% csrf_token %}
+        Choose your date: <input type="date" name="date" value="">
+        <select class="" name="restaurant">
+            <option value=""></option>
+            {% if restaurants %}
+                {% for restaurant in restaurants %}
+                    <option value="{{restaurant.id}}">{{restaurant.name}}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <input type="submit" value="Choose">
     </form>
-  </body>
+</body>
 </html>
