@@ -1,3 +1,10 @@
+form {
+  display: inline-block;
+}
+
 #map {
-  height: 500px;
+  height: 800px;
+  width: 800px;
+  display: inline-block;
+  vertical-align: top;
 }

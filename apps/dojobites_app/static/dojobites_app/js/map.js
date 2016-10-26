@@ -2,18 +2,18 @@ var map;
 var infowindow;
 
 function initMap() {
-  var pyrmont = {lat: 47.609811, lng: -122.196526};
+  var codingdojo = {lat: 47.609811, lng: -122.196526};
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: pyrmont,
+    center: codingdojo,
     zoom: 15
   });
 
   infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
-    location: pyrmont,
-    radius: 500,
+    location: codingdojo,
+    radius: 400,
     type: ['restaurant']
   }, callback);
 }
