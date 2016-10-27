@@ -1,7 +1,8 @@
 var map;
 var infowindow;
 
-function initMap() {
+
+window.initMap = function() {
   var codingdojo = {lat: 47.609811, lng: -122.196526};
 
   map = new google.maps.Map(document.getElementById('map'), {
