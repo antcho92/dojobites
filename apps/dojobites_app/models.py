@@ -13,11 +13,9 @@ class RestaurantManager(models.Manager):
             errors.append('Please enter the name!')
         elif self.filter(name__iexact=name).exists():
             errors.append('Restaurant already existed!')
-        # if not desc or desc.isspace():
-        #     errors.append('Please enter the description.')
         if errors:
             return (False, errors)
-        self.create(name=name, rating=rating, location='location')
+        self.create(name=name, rating=rating, location=location)
         return (True, "Restaurant Added!")
 
 class Restaurant(models.Model):
