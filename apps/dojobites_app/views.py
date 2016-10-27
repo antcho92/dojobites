@@ -105,3 +105,11 @@ def calendar(request):
         'restaurants': restaurants
     }
     return render(request, 'dojobites_app/calendar.html', context)
+
+def profile(request):
+    u = User.objects.get(id=request.session['user_id'])
+    context = {
+        'u' : u,
+        'choices': u.choices.all(),
+    }
+    return render(request, 'dojobites_app/profile.html', context)
