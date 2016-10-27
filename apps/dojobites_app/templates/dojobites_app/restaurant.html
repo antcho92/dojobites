@@ -5,10 +5,10 @@
     <li>Joined users: </li>
     <li>
         <ol>
-            {% for user in choices.users.all %}
+            {% for user in choice.users.all|dictsort:'first_name' %}
             <li>{{ user.first_name|title }} {{ user.last_name|title }}</li>
             {% endfor %}
         </ol>
     </li>
-    <li>{% if not user in choice.users.all %}<button id="join">Wanna Join?</button>{% endif %}</li>
+    <li>{% if user not in choice.users.all %}<button id="join" title="{{ choice.id }}">Wanna Join?</button>{% endif %}</li>
 </ul>
