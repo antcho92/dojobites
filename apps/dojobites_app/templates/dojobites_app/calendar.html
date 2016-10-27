@@ -29,13 +29,13 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form class="" action="/bites/join" method="post"> {% csrf_token %}
+    <form action="/bites/join" method="post"> {% csrf_token %}
         Choose your date: <input type="date" name="date" value="">
-        <select class="" name="restaurant">
+        <select name="restaurant">
             <option value=""></option>
             {% if restaurants %}
                 {% for restaurant in restaurants %}
-                    <option value="{{restaurant.id}}">{{restaurant.name}}</option>
+                    <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
                 {% endfor %}
             {% endif %}
         </select>

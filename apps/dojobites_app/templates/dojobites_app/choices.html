@@ -11,7 +11,7 @@
 <div id="user">
     {% for restaurant in restaurants %}
     <ul>
-        <li>--------------{{ forloop.counter }}---------------- {% if join %}<button id="join" >Wanna Join!</button>{% endif %}</li>
+        <li>--------------{{ forloop.counter }}---------------- {% if join %}<button id="join"  title="{{ restaurant.id }}">Wanna Join?</button>{% endif %}</li>
         <li>Restaurant: {{ restaurant.name|title }}</li>
         <li>cuisine: {{ restaurant.cuisine|title }}</li>
         <li>Description: {{ restaurant.description }}</li>
