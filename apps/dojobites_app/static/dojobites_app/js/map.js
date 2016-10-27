@@ -40,6 +40,6 @@ function createMarker(place) {
   });
 }
 
-$(document).ready(function() {
-
-});
+// $(document).ready(function() {
+//
+// });

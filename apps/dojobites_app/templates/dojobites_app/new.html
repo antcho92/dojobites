@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>DojoBites Add Restaurants</title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnxTAmM1cSy6xszVT6UON-smIswB9rsFE&libraries=places&callback=initMap" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+    <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYt8rrB_9YvTirgJZiGxVsvQEn-fKlwA&callback=initMap" async defer></script>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     <link rel="stylesheet" href="{% static 'dojobites_app/css/map.css' %}"media="screen" title="no title" charset="utf-8">
@@ -40,7 +41,7 @@
             <option value="vietnamese">Vietnamese</option>
         </select>
         <p>Takeout:</p>
-        <input type="radio" name="takeout" value="True">Takeout allowed
+        <input type="radio" name="takeout" value="True" checked>Takeout allowed
         <input type="radio" name="takeout" value="False">No takeout
         <button type="submit">Submit</button>
     </form>
@@ -55,6 +56,6 @@
 
       </ul>
     </div>
-    <script type="text/javascript" src="{% static 'dojobites_app/js/map.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'dojobites_app/js/map.js' %}"></script>
 </body>
 </html>

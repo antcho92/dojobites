@@ -1,13 +1,23 @@
-{% if choices %}
-  {% for choice in choices %}
-  <ul>
-      <li>-----------{{ forloop.counter }}------------</li>
-      <li><a href="{% url 'bites:details' choice_id=choice.id %}">{{ choice.restaurant.name|title }}</a></li>
-      <li> {{choice.restaurant.name }}</li>
-      <li>{{ choice.restaurant.cuisine|title }}</li>
-      <li>{{ choice.restaurant.description }}</li>
-      <li>{{ choice.restaurant.location }}</li>
-      <li>{{ choice.users.all|length }}</li>
-  </ul>
-  {% endfor %}
+{% if restaurants %}
+<form id="rest" action="{% url 'bites:show_rest' %}" method="post"> {% csrf_token %}
+    <label>Restaurant:</label>
+    <select id="rest" name="restaurant">
+        <option value=""></option>
+        {% for restaurant in restaurants %}
+            <option value="{{ restaurant.id }}">{{ restaurant.name|title }}</option>
+        {% endfor %}
+    </select>
+</form>
+<div id="user">
+    {% for restaurant in restaurants %}
+    <ul>
+        <li>--------------{{ forloop.counter }}---------------- {% if join %}<button id="join" >Wanna Join!</button>{% endif %}</li>
+        <li>Restaurant: {{ restaurant.name|title }}</li>
+        <li>cuisine: {{ restaurant.cuisine|title }}</li>
+        <li>Description: {{ restaurant.description }}</li>
+        <li>Location: {{ restaurant.location }}</li>
+        <li>Total user: {{ restaurant.user_count }} person{{ restaurant.user_count|pluralize }}</li>
+    </ul>
+    {% endfor %}
+</div>
 {% endif %}

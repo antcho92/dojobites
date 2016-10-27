@@ -33,23 +33,30 @@ main{
         vertical-align: top;
         margin-right: 50px;
     }
-    #choice {
+    div#choice {
         width: 300px;
     }
-        form#date input {
-            font-size: 1em;
-        }
-        div#choices {
+        div#results {
             height: 350px;
-            overflow: auto;
         }
-            #choices ul {
-                list-style: none;
+            form#date input {
+                font-size: 1em;
             }
-                #choices ul>li {
-                    margin-left: 30px;
+            form#rest select {
+                font-size: 1em;
+                width: 160px;
+                height: 25px;
+                margin-top: 15px;
+                margin-bottom: 10px;
+            }
+            div#user {
+                height: 300px;
+                overflow: auto;
+            }
+                #user ul {
+                    list-style: none;
                 }
-                    ol>li {
+                    #user ul li {
                         margin-left: 30px;
                     }
     #comments{

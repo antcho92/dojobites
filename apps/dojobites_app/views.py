@@ -8,6 +8,7 @@ from datetime import datetime
 
 def index(request):
     # print "*"*70
+    # print "Restaurants:", Restaurant.objects.values('id', 'name')
     # print "Choice:", Choice.objects.values('id', 'users', 'restaurant', 'date')
     # print "*"*70
     if 'user_id' not in request.session:
@@ -56,29 +57,41 @@ def create(request):
             messages.error(request, error)
     return redirect(reverse('bites:new'))
 
-def details(request, choice_id):
-    choice = Choice.objects.get(id=choice_id)
-    print(choice.users.all)
+def details(request, restaurant_id):
+    restaurant = Restaurant.objects.get(id=restaurant_id)
     context = {
-        'choice': choice
+        'restaurant': restaurant,
+        #need to add query lookup for users but first need to add join functionality
     }
     return render(request, 'dojobites_app/details.html', context)
 
 def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
-        choices = Choice.objects.filter(date=date).order_by('-id')
-        # for choice in choices:
-        #     choice.annotate(number_of_users=Count('users')
-        restaurants = Restaurant.objects.filter(choices__date=date)#.annotate(number_of_users=Count('choices'))
-        for restaurant in restaurants:
-            print(restaurant.count(choices))
+        restaurants = Restaurant.objects.filter(choice__date=date).annotate(user_count=Count('choice__users')).order_by('-user_count', 'name')
+        user = User.objects.get(id=request.session['user_id'])
+        join = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
-            'choices': choices,
             'restaurants': restaurants,
-            'date': date
+            'join' : join
         }
     return render(request, 'dojobites_app/choices.html', context)
+
+def show_rest(request):
+    if request.method == 'POST':
+        date = request.POST['date']
+        rest_id = request.POST['restaurant']
+        r = Restaurant.objects.get(id=rest_id)
+        c = Choice.objects.get(date=date, restaurant=r)
+        users = c.users.all()
+        user = User.objects.get(id=request.session['user_id'])
+        join = False if Choice.objects.filter(date=date, users=user).exists() else True
+        context = {
+            'users' : users,
+            'restaurant' : r,
+            'join' : join
+        }
+    return render(request, 'dojobites_app/restaurant.html', context)
 
 def calendar(request):
     restaurants = Restaurant.objects.all()

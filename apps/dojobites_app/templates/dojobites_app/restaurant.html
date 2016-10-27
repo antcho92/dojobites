@@ -1,0 +1,14 @@
+<ul>
+    <li>Cuisine: {{ restaurant.cuisine|title }}</li>
+    <li>Description: {{ restaurant.description }}</li>
+    <li>Location: {{ restaurant.location }}</li>
+    <li>Joined users: </li>
+    <li>
+        <ol>
+        {% for user in users %}
+            <li>{{ user.first_name|title }} {{ user.last_name|title }}</li>
+        {% endfor %}
+        </ol>
+    </li>
+    <li>{% if join %}<button id="join">Wanna Join!</button>{% endif %}</li>
+</ul>

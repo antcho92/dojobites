@@ -9,7 +9,8 @@ urlpatterns = [
     url(r'^create$', create, name='create'),
     url(r'^comment$', comment, name='comment'),
     url(r'^show/choice$', show_choice, name='show_choice'),
-    url(r'^details/(?P<choice_id>\d+)$', details, name='details'),
+    url(r'^show/restaurant$', show_rest, name='show_rest'),
+    url(r'^details/(?P<restaurant_id>\d+)$', details, name='details'),
     url(r'^calendar$', calendar, name='calendar'),
 
 ]

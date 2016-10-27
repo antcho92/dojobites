@@ -10,11 +10,13 @@ class RestaurantManager(models.Manager):
         desc = input['description']
         if not name or name.isspace():
             errors.append('Please enter the name!')
+        elif self.filter(name__iexact=name).exists():
+            errors.append('Restaurant already existed!')
         if not desc or desc.isspace():
             errors.append('Please enter the description.')
         if errors:
             return (False, errors)
-        Restaurant.objects.create(name=name, description=desc, cuisine=input['cuisine'], takeout=input['takeout'], location='location')
+        self.create(name=name, description=desc, cuisine=input['cuisine'], takeout=input['takeout'], location='location')
         return (True, "Restaurant Added!")
 
 class Restaurant(models.Model):
@@ -28,9 +30,10 @@ class Restaurant(models.Model):
     objects = RestaurantManager()
     def __str__(self):
         return self.name
-    # this method doesn't work in the templates :(
-    def count(self, choices):
-        return len(choices.filter(restaurant=self))
+    # def count(self, choices):
+    #     return len(choices.filter(restaurant=self))
+    # def attendees(self, choices, ):
+    #     pass
 
 class CommentManager(models.Manager):
     def validate_comment(self, input, user_id):
@@ -66,17 +69,19 @@ class ChoiceManager(models.Manager):
             choice = Choice.objects.filter(date=date, restaurant=r)
             if not choice.exists():
                 choice = Choice.objects.create(date=date, restaurant=r)
-            choice.users.add(user)
+                choice.users.add(user)
+            else:
+                choice[0].users.add(user)
             return (True, "You made a choice!")
 
 class Choice(models.Model):
     date = models.DateField()
     users = models.ManyToManyField(User, related_name='choices')
-    restaurant = models.ForeignKey(Restaurant, related_name='choices')
+    restaurant = models.ForeignKey(Restaurant)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # def __str__(self):
-    #     return self.restaurant + " " +  self.date
+    #     return self.restaurant + self.users.all
     objects = ChoiceManager()
 
 class Comment(models.Model):

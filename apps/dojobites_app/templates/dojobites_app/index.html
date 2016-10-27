@@ -5,25 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dojo Bites</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+    <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     <script>
         $(document).ready(function() {
-            $("input#date").change(function() {
-                var date = $(this).val().replace(/\s/g,'');
-                if(date) {
+            $('input#date').change(function() {
+                var date = $(this).val();
+                if(date)  update_choice(); 
+                else  $('div#results').html('');
+            })
+            $('div#results').on('change', 'select#rest', function() {
+                var rest = $(this).val();
+                var date = $('input#date').val();
+                if(rest) {
+                    var serialized =  $('form#rest').serialize()+'&date='+date;
                     $.ajax({
                         method : 'post',
-                        url : $('form#date').attr('action'),  // '/bites/show/choice'
-                        data : $('form#date').serialize(),
+                        url : $('form#rest').attr('action'),  // '/bites/show/restaurant'
+                        data : serialized,
                         success : function(resp){
-                                      $('div#choices').html(resp)
+                                      $('div#user').html(resp)
                                   }
                     })
                 }
+                else  update_choice();
             })
         })
+        function update_choice() {
+            $.ajax({
+                method : 'post',
+                url : $('form#date').attr('action'),  // '/bites/show/choice'
+                data : $('form#date').serialize(),
+                success : function(resp){
+                              $('div#results').html(resp)
+                          }
+            })
+        }
     </script>
   </head>
   <body>
@@ -54,7 +73,7 @@
                         <label>Select a Date:</label>
                         <input id="date" name="date" type="date">
                     </form>
-                    <div id="choices"></div>
+                    <div id="results"></div>
                 </div>
                 <div id="comments">
                     <h3>Comments:</h3>
@@ -83,9 +102,9 @@
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
                             <tr>
-                                <td>{{restaurant.name}}</td>
+                                <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
                                 <td>{{restaurant.description}}</td>
-                                <td>{{restaurant.cuisine}}</td>
+                                <td>{{restaurant.cuisine|title}}</td>
                                 <td>{{restaurant.takeout}}</td>
                                 <td>{{restaurant.location}}</td>
                                 <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
