@@ -74,7 +74,7 @@ body{
             form#date input {
                 font-size: 1em;
             }
-            form#rest select {
+            form#choice select {
                 font-size: 1em;
                 width: 160px;
                 height: 25px;

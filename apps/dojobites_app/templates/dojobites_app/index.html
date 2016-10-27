@@ -20,38 +20,32 @@
                 else  $('div#results').html('');
             })
             $('div#results').on('change', 'select#rest', function() {
-                var rest = $(this).val();
-                var date = $('input#date').val();
-                if(rest) {
-                    var serialized =  $('form#rest').serialize()+'&date='+date;
+                var choice = $(this).val();
+                if(choice) {
                     $.ajax({
                         method : 'post',
-                        url : $('form#rest').attr('action'),  // '/bites/show/restaurant'
-                        data : serialized,
+                        url : $('form#choice').attr('action'),  // '/bites/show/restaurant'
+                        data : $('form#choice').serialize(),
                         success : function(resp){
                                       $('div#user').html(resp);
-                                      $('button#join').attr("title", rest);
                                   }
                     })
                 }
                 else  update_date();
             })
             $('div#results').on('click', 'button', function() {
-                var rest_id =  $('button#join').attr("title");
-                var date =  $('input#date').val();
-                var url = "/bites/join/"+date+"/"+rest_id;
+                var choice_id =  $(this).attr("title");
+                var url = "/bites/join/"+choice_id;
                 console.log("URL:", url);
                 $.ajax({
                     method : 'get',
                     url : url,
-                    // data : serialized,
                     success : function(resp){
                                 console.log("Response:", resp);
                               }
                 })
-
+                update_date();
             })
-
             function update_date() {
                 $.ajax({
                     method : 'post',
