@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#accordion").accordion();
+        });
+    </script>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/map.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <header>
+        <h1>Dojo Bites</h1>
+        <div class="nav_bar">
+            <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
+            <h4><a href="#">What's Nearby?</a></h4>
+            <h4><a href="#">My Calendar</a></h4>
+            <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
+            <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
+            <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+        </div>
+    </header>
+    <div id="accordion">
+      {% if choices %}
+        {% for choice in choices %}
+        <h3>{{choice.date}}</h3>
+        <div>
+            <h3>{{choice.restaurant.name}}</h3>
+            <p>{{choice.restaurant.location}}</p>
+              {% if choice.users.all|length > 1 %}
+              <ul>
+                <lh>You're going with:</lh>
+                {% for user in choice.users.all %}
+                    {% if user != u %}
+                      <li>{{user.first_name}}</li>
+                    {% endif %}
+                {% endfor %}
+              </ul>
+              {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>
