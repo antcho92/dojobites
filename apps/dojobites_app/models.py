@@ -22,7 +22,7 @@ class RestaurantManager(models.Manager):
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
-    rating = models.IntegerField()
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
     location = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
