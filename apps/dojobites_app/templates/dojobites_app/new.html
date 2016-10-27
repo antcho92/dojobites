@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>DojoBites Add Restaurants</title>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-    <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYt8rrB_9YvTirgJZiGxVsvQEn-fKlwA&callback=initMap" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script> -->
+    <!-- api key will be deleted periodically. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_SjAKKZf6xQTOw0oEz9ZCuDab4uta2Dg&libraries=places&callback=initMap" async defer></script>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/map.css' %}"media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/map.css' %}" media="screen" title="no title" charset="utf-8">
 </head>
+
 <body>
     <header>
         <h1>Dojo Bites</h1>
@@ -26,7 +29,7 @@
     </header>
     <a href="{% url 'bites:index' %}">Go Back</a>
     <form action="{% url 'bites:create' %}" method="post"> {% csrf_token %}
-      <h1>Suggest a Restaurant!</h1>
+        <h1>Suggest a Restaurant!</h1>
         <p>Name:</p>
         <input type="text" name="name">
         <p>Description:</p>
@@ -45,17 +48,16 @@
         <input type="radio" name="takeout" value="False">No takeout
         <button type="submit">Submit</button>
     </form>
-    {% if messages %}
-        {% for message in messages %}
-            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    <div id="map"></div>
-    <div id="results">
-      <ul>
+    {% if messages %} {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        {% endfor %} {% endif %}
+        <div id="map"></div>
+        <div id="results">
+            <ul>
 
-      </ul>
-    </div>
-    <script type="text/javascript" src="{% static 'dojobites_app/js/map.js' %}"></script>
+            </ul>
+        </div>
+        <script type="text/javascript" src="{% static 'dojobites_app/js/map.js' %}"></script>
 </body>
+
 </html>
