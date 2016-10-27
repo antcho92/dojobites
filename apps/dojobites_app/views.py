@@ -7,10 +7,6 @@ from django.db.models import Count
 from datetime import datetime
 
 def index(request):
-    # print "*"*70
-    # print "Restaurants:", Restaurant.objects.values('id', 'name')
-    # print "Choice:", Choice.objects.values('id', 'users', 'restaurant', 'date')
-    # print "*"*70
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     context = {
@@ -52,6 +48,8 @@ def comment(request):
     return redirect(reverse('bites:index'))
 
 def new(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('users:index'))
     restaurants = Restaurant.objects.all()
     return render(request, 'dojobites_app/new.html')
 
@@ -66,6 +64,8 @@ def create(request):
     return redirect(reverse('bites:new'))
 
 def details(request, restaurant_id):
+    if 'user_id' not in request.session:
+        return redirect(reverse('users:index'))
     restaurant = Restaurant.objects.get(id=restaurant_id)
     context = {
         'restaurant': restaurant,
@@ -74,6 +74,8 @@ def details(request, restaurant_id):
     return render(request, 'dojobites_app/details.html', context)
 
 def show_choice(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('users:index'))
     if request.method == 'POST':
         date = request.POST['date']
         choices = Choice.objects.filter(date=date)
@@ -85,6 +87,8 @@ def show_choice(request):
     return render(request, 'dojobites_app/choices.html', context)
 
 def show_rest(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('users:index'))
     if request.method == 'POST':
         c = Choice.objects.get(id=request.POST['choice'])
         user = User.objects.get(id=request.session['user_id'])
@@ -94,6 +98,8 @@ def show_rest(request):
     return render(request, 'dojobites_app/restaurant.html', context)
 
 def calendar(request):
+    if 'user_id' not in request.session:
+        return redirect(reverse('users:index'))
     restaurants = Restaurant.objects.all()
     context = {
         'restaurants': restaurants

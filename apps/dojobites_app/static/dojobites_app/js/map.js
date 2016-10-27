@@ -38,6 +38,8 @@ function createMarker(place) {
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name + '<br>' + place.vicinity);
     $('#placeName').val(place.name);
+    $('#rating').val(place.rating);
+    $('#address').val(place.vicinity);
     infowindow.open(map, this);
   });
 }
