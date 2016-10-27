@@ -13,7 +13,7 @@
         $(document).ready(function() {
             $('input#date').change(function() {
                 var date = $(this).val();
-                if(date)  update_choice(); 
+                if(date)  update_date();
                 else  $('div#results').html('');
             })
             $('div#results').on('change', 'select#rest', function() {
@@ -26,23 +26,49 @@
                         url : $('form#rest').attr('action'),  // '/bites/show/restaurant'
                         data : serialized,
                         success : function(resp){
-                                      $('div#user').html(resp)
+                                      $('div#user').html(resp);
+                                      $('button#join').attr("title", rest);
                                   }
                     })
                 }
-                else  update_choice();
+                else  update_date();
             })
+            $('div#results').on('click', 'button', function() {
+                var rest_id =  $('button#join').attr("title");
+                var date =  $('input#date').val();
+                var url = "/bites/join/"+date+"/"+rest_id;
+                console.log("URL:", url);
+                $.ajax({
+                    method : 'get',
+                    url : url,
+                    // data : serialized,
+                    success : function(resp){
+                                console.log("Response:", resp);
+                              }
+                })
+
+            })
+
+            function update_date() {
+                $.ajax({
+                    method : 'post',
+                    url : $('form#date').attr('action'),  // '/bites/show/choice'
+                    data : $('form#date').serialize(),
+                    success : function(resp){
+                        $('div#results').html(resp);
+                        var rest_id =  $('a#join').attr("title");
+                        var date =  $('input#date').val();
+                        var url = "/bites/join/"+date+"/"+rest_id;
+                        $('a#join').attr("href", url);
+                    }
+                })
+            }
+            function joinConfirm() {
+                if (!confirm("Confirm Join?")) {
+                    window.event.returnValue = false;
+                }
+            }
         })
-        function update_choice() {
-            $.ajax({
-                method : 'post',
-                url : $('form#date').attr('action'),  // '/bites/show/choice'
-                data : $('form#date').serialize(),
-                success : function(resp){
-                              $('div#results').html(resp)
-                          }
-            })
-        }
     </script>
   </head>
   <body>

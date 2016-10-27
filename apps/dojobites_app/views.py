@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.urls import reverse
 from ..login_reg_app.models import User
@@ -30,6 +30,14 @@ def join(request):
             for error in validation[1]:
                 messages.error(request, error)
     return redirect(reverse('bites:calendar'))
+
+def join_ajax(request, date, restaurant_id):
+    user = User.objects.get(id=request.session['user_id'])
+    r = Restaurant.objects.get(id=restaurant_id)
+    choice = Choice.objects.get(date=date, restaurant=r)
+    choice.users.add(user)
+    return HttpResponse('Joined successfully!')
+
 
 def unjoin(request, restaurant_id):
     return redirect(reverse('bites:index'))
