@@ -31,12 +31,11 @@ def join(request):
                 messages.error(request, error)
     return redirect(reverse('bites:calendar'))
 
-def join_ajax(request, date, restaurant_id):
+def join_choice(request, choice_id):
     user = User.objects.get(id=request.session['user_id'])
-    r = Restaurant.objects.get(id=restaurant_id)
-    choice = Choice.objects.get(date=date, restaurant=r)
+    choice = Choice.objects.get(id=choice_id)
     choice.users.add(user)
-    return HttpResponse('Joined successfully!')
+    return HttpResponse('You made a choice!')
 
 
 def unjoin(request, restaurant_id):
@@ -76,7 +75,7 @@ def details(request, restaurant_id):
 def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
-        choices = Choice.objects.filter(date=date)
+        choices = Choice.objects.filter(date=date).annotate(num_users=Count('users')).order_by('-num_users')
         user = User.objects.get(id=request.session['user_id'])
         context = {
             'user': user,
@@ -86,10 +85,11 @@ def show_choice(request):
 
 def show_rest(request):
     if request.method == 'POST':
-        c = Choice.objects.get(id=request.POST['choice'])
+        choice = Choice.objects.get(id=request.POST['choice'])
         user = User.objects.get(id=request.session['user_id'])
         context = {
             'user' : user,
+            'choice' : choice
         }
     return render(request, 'dojobites_app/restaurant.html', context)
 
