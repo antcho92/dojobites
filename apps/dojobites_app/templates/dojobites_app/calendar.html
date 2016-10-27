@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Calendar</title>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
 </head>
 <body>
@@ -19,7 +20,7 @@
             <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
             <h4><a href="#">My Profile</a></h4>
             <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-            <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+            <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
         </div>
     </header>
     {% if messages %}
@@ -29,17 +30,24 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form action="/bites/join" method="post"> {% csrf_token %}
-        Choose your date: <input type="date" name="date" value="">
-        <select name="restaurant">
-            <option value=""></option>
-            {% if restaurants %}
-                {% for restaurant in restaurants %}
-                    <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        <input type="submit" value="Choose">
-    </form>
+    <main class="container fill">
+        <div id="background">
+            <div class="row">
+                <a href="{% url 'bites:index' %}">Go Back</a>
+                <form action="/bites/join" method="post"> {% csrf_token %}
+                    <h3>Choose your date:</h3> <input type="date" name="date" value="">
+                    <select name="restaurant">
+                        <option value=""></option>
+                        {% if restaurants %}
+                            {% for restaurant in restaurants %}
+                                <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <input type="submit" value="Choose">
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
