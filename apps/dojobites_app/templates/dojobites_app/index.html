@@ -120,19 +120,16 @@
                 <table>
                     <thead>
                         <th>Name:</th>
-                        <th>Description:</th>
-                        <th>Cuisine:</th>
-                        <th>Takeout:</th>
+                        <th>Rating:</th>
                         <th>Location:</th>
+                        <th>Actions:</th>
                     </thead>
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
                             <tr>
                                 <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
-                                <td>{{restaurant.description}}</td>
-                                <td>{{restaurant.cuisine|title}}</td>
-                                <td>{{restaurant.takeout}}</td>
-                                <td>{{restaurant.location}}</td>
+                                <td>{{restaurant.rating}}</td>
+                                <td>{{restaurant.location|title}}</td>
                                 <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
                             </tr>
                         {% endfor %}

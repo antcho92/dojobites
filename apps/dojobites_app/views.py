@@ -76,12 +76,14 @@ def details(request, restaurant_id):
 def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
+        choices = Choice.objects.filter(date=date)
         restaurants = Restaurant.objects.filter(choice__date=date).annotate(user_count=Count('choice__users')).order_by('-user_count', 'name')
         user = User.objects.get(id=request.session['user_id'])
         join = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
             'restaurants': restaurants,
-            'join' : join
+            'join' : join,
+            'choices': choices
         }
     return render(request, 'dojobites_app/choices.html', context)
 

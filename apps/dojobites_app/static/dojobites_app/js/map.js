@@ -1,8 +1,7 @@
 var map;
 var infowindow;
 
-
-window.initMap = function() {
+function initMap() {
   var codingdojo = {lat: 47.609811, lng: -122.196526};
 
   map = new google.maps.Map(document.getElementById('map'), {
@@ -14,8 +13,9 @@ window.initMap = function() {
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
     location: codingdojo,
-    radius: 400,
-    type: ['food']
+    radius: 500,
+    type: ['food'],
+    rankBy: google.maps.places.RankBy.PROMINENCE
   }, callback);
 }
 
@@ -38,8 +38,6 @@ function createMarker(place) {
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name + '<br>' + place.vicinity);
     $('#placeName').val(place.name);
-    $('#rating').val(place.rating);
-    $('#address').val(place.vicinity);
     infowindow.open(map, this);
   });
 }
