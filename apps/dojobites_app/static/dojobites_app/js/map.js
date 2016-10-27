@@ -6,7 +6,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: codingdojo,
-    zoom: 15
+    zoom: 16
   });
 
   infowindow = new google.maps.InfoWindow();
@@ -14,7 +14,7 @@ function initMap() {
   service.nearbySearch({
     location: codingdojo,
     radius: 400,
-    type: ['restaurant']
+    type: ['food']
   }, callback);
 }
 
@@ -35,11 +35,12 @@ function createMarker(place) {
   });
 
   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
+    infowindow.setContent(place.name + '<br>' + place.vicinity);
+    $('#placeName').val(place.name);
     infowindow.open(map, this);
   });
 }
 
-// $(document).ready(function() {
-//
-// });
+$(document).ready(function() {
+
+});
