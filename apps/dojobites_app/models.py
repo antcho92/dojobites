@@ -7,16 +7,17 @@ class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
         errors = []
         name = input['name']
-        desc = input['description']
+        rating = input['rating']
+        location = input['location']
         if not name or name.isspace():
             errors.append('Please enter the name!')
         elif self.filter(name__iexact=name).exists():
             errors.append('Restaurant already existed!')
-        if not desc or desc.isspace():
-            errors.append('Please enter the description.')
+        # if not desc or desc.isspace():
+        #     errors.append('Please enter the description.')
         if errors:
             return (False, errors)
-        self.create(name=name, description=desc, cuisine=input['cuisine'], takeout=input['takeout'], location='location')
+        self.create(name=name, rating=rating, location='location')
         return (True, "Restaurant Added!")
 
 class Restaurant(models.Model):
