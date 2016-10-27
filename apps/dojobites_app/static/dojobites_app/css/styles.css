@@ -2,74 +2,42 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*font-family: arial;*/
-    font-family: fantasy;
+    font-family: arial;
 }
-header{
-    padding: 20px 0px 20px 0px;
-    background-color: #5F7EC6;
-    /*border-bottom: 4px solid #FFF3BA;*/
-}
-
-header h1{
-    color: white;
-    font-weight: 600;
-}
-
 .nav_bar{
-    border-bottom: 2px solid grey;
-    border-top: 2px solid grey;
+    border: 2px solid black;
     justify-content: space-around;
     display: inline-flex;
-    width: 100%;
-    background-color: #FFE66B;
+    width: 100%
 }
 header h4{
     margin: 10px;
 }
-header a{
-    color: black;
+header button{
+    margin: 10px;
 }
-/*body{
-    background-color: #264A9C;
-}*/
 main{
+    border: 1px solid black;
+    margin-top: 10px;
     width:100%;
-    background-color: #FFF3BA;
 }
-#background{
-    background-color: #FFF3BA;
-    height: 100%;
-    min-height: 300px;
-    padding: 5px 10px 10px 10px;
+#voting{
+    width: 1300px;
+    max-height: 400px;
+    border: 1px solid black;
+    margin: 20px;
+    padding: 5px 10px 5px 10px;
 }
-h1{
-    margin: 0px;
-}
-body{
-    background-color: #5F7EC6;
-}
-
-
-#user li{
-    margin-left: 10px;
-}
-
-#comments{
-    margin-bottom: 20px;
-}
-
-.row h3{
-    margin-top: 0px;
-}
-<<<<<<< HEAD
-
-        form#date input {
-            font-size: 1em;
-        }
-        div#choices {
-            /*height: 350px;*/
-            overflow: auto;
+    #choice, #comments, table {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 50px;
+    }
+    div#choice {
+        width: 300px;
+    }
+        div#results {
+            height: 350px;
         }
             form#date input {
                 font-size: 1em;
@@ -92,34 +60,22 @@ body{
                         margin-left: 30px;
                     }
     #comments{
-
-        /*outline: 1px dashed gray;*/
+        min-height: 400px;
+        outline: 1px dashed gray;
     }
-    #comments_h3{
-        margin-top: 0px;
-    }
-    #main h3{
-        margin-top: 0px;
-    }
-    #main{
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-    #table{
+    table{
         border-collapse: collapse;
         text-align: center;
     }
-        #table thead{
+        thead{
             border-bottom: black 2px solid;
-            padding: 10px;
         }
-            #table th{
-                margin: 10px;
+            th{
                 height: 40px;
-                padding: 0px 10px 5px 10px;
+                padding: 5px 10px;
                 border-bottom: 1px black solid;
             }
-            #table td{
+            td{
                 height: 30px;
                 border-bottom: 1px black solid;
             }
@@ -129,6 +85,6 @@ body{
 .success {
   color: green;
 }
-ul.messages {
+ul#messages {
   list-style: none;
 }

@@ -1,33 +1,10 @@
-*{
-    font-family: fantasy;
+form {
+  display: inline-block;
 }
-h1{
-    margin: 0px;
-}
-header h4{
-    margin: 10px;
-}
-header a{
-    color: black;
-}
-.nav_bar{
-    border-bottom: 2px solid grey;
-    border-top: 2px solid grey;
-    justify-content: space-around;
-    display: inline-flex;
-    width: 100%;
-    background-color: #FFE66B;
-}
-header h1{
-    color: white;
-    font-weight: 600;
-}
-main{
-    width:100%;
-    background-color: white;
-}
-#background{
-    background-color: #FFF3BA;
-    height: 100%;
-    min-height: 300px;
+
+#map {
+  height: 800px;
+  width: 800px;
+  display: inline-block;
+  vertical-align: top;
 }

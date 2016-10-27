@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dojo Bites</title>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
-
     {% load staticfiles %}
-
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     <script>
         $(document).ready(function() {
@@ -59,17 +56,17 @@
         })
     </script>
   </head>
-
-<body>
-      <div>
+  <body>
+      <div id="container">
         <header>
             <h1>Dojo Bites</h1>
             <div class="nav_bar">
                 <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
+                <h4><a href="#">What's Nearby?</a></h4>
                 <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
                 <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-                <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
+                <a href="{%url 'users:logout' %}"><button>Logout</button></a>
             </div>
         </header>
         {% if messages %}
@@ -79,59 +76,52 @@
             {% endfor %}
         </ul>
         {% endif %}
-            <div id="background"
-            <main id="main" class="container fill">
-                <h3>Hello {{ user.first_name|title }}! Would you like to join a group?</h3>
-                <div class="row" id="middle">
-                    <div id="voting" class="col-lg-3">
-                        <div id="choice">
-                            <form id="date" action="{% url 'bites:show_choice' %}" method="post"> {% csrf_token %}
-                                <label>Select a Date:</label>
-                                <input id="date" name="date" type="date">
-                            </form>
-                            <div id="results"></div>
-                        </div>
-                    </div> <!-- end of voting -->
-                        <div id="comments" class="col-lg-3">
-                            <h3 id="comments_h3">Comments:</h3>
-                            {% if not comments %}
-                                <h5>Be the first to write a comment!</h5>
-                            {% else %}
-                                <ul class='comments'>
-                                {% for comment in comments %}
-                                    <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                            <form action="{% url 'bites:comment' %}" method="POST"> {% csrf_token %}
-                                <input type="text" name="content">
-                                <input type="submit" value="Submit">
-                            </form>
-                        </div>
-                        <div id="table" class="col-lg-3">
-                            <table>
-                                <thead>
-                                    <th>Name:</th>
-                                    <th>Rating:</th>
-                                    <th>Location:</th>
-                                    <th>Actions:</th>
-                                </thead>
-                                {% if restaurants %}
-                                    {% for restaurant in restaurants %}
-                                        <tr>
-                                            <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
-                                            <td>{{restaurant.rating}}</td>
-                                            <td>{{restaurant.location|title}}</td>
-                                            <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif%}
-                            </table>
-                        </div> <!-- end of table -->
-                    </div>
-            </main> <!-- end main_content -->
-        </div>
-
+        <main>
+            <h3>Join a group! {{ user.first_name|title }}</h3>
+            <div id="voting">
+                <div id="choice">
+                    <form id="date" action="{% url 'bites:show_choice' %}" method="post"> {% csrf_token %}
+                        <label>Select a Date:</label>
+                        <input id="date" name="date" type="date">
+                    </form>
+                    <div id="results"></div>
+                </div>
+                <div id="comments">
+                    <h3>Comments:</h3>
+                    {% if not comments %}
+                        <h5>Be the first to write a comment!</h5>
+                    {% else %}
+                        <ul class='comments'>
+                        {% for comment in comments %}
+                            <li class='comment'>{{comment.user.first_name}} says {{comment.content}}<br></li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <form action="{% url 'bites:comment' %}" method="POST"> {% csrf_token %}
+                        <input type="text" name="content">
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+                <table>
+                    <thead>
+                        <th>Name:</th>
+                        <th>Rating:</th>
+                        <th>Location:</th>
+                        <th>Actions:</th>
+                    </thead>
+                    {% if restaurants %}
+                        {% for restaurant in restaurants %}
+                            <tr>
+                                <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
+                                <td>{{restaurant.rating}}</td>
+                                <td>{{restaurant.location|title}}</td>
+                                <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif%}
+                </table>
+            </div> <!-- end of voting -->
+        </main> <!-- end main_content -->
     </div>
-</body>
+  </body>
 </html>
