@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^show/restaurant$', show_rest, name='show_rest'),
     url(r'^details/(?P<restaurant_id>\d+)$', details, name='details'),
     url(r'^calendar$', calendar, name='calendar'),
-
+    url(r'^profile$', profile, name='profile')
 ]
