@@ -56,10 +56,6 @@
                     data : $('form#date').serialize(),
                     success : function(resp){
                         $('div#results').html(resp);
-                        var rest_id =  $('a#join').attr("title");
-                        var date =  $('input#date').val();
-                        var url = "/bites/join/"+date+"/"+rest_id;
-                        $('a#join').attr("href", url);
                     }
                 })
             }

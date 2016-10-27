@@ -1,28 +1,24 @@
-{% if restaurants %}
-<form id="rest" action="{% url 'bites:show_rest' %}" method="post"> {% csrf_token %}
+{% if choices %}
+{% for choice in choices %}
+<form id="choice" action="{% url 'bites:show_rest' %}" method="post"> {% csrf_token %}
     <label>Restaurant:</label>
-    <select id="rest" name="restaurant">
+    <select id="rest" name="choice">
         <option value=""></option>
-        {% for restaurant in restaurants %}
-            <option value="{{ restaurant.id }}">{{ restaurant.name|title }}</option>
+        {% for choice in choices %}
+            <option value="{{ choice.id }}">{{ choice.restaurant.name|title }}</option>
         {% endfor %}
     </select>
 </form>
 <div id="user">
-    {% for restaurant in restaurants %}
+    {% for choice in choices %}
     <ul>
-        <li>--------------{{ forloop.counter }}---------------- {% if join %}<button id="join"  title="{{ restaurant.id }}">Wanna Join?</button>{% endif %}</li>
-        <li>Restaurant: {{ restaurant.name|title }}</li>
-        <li>cuisine: {{ restaurant.cuisine|title }}</li>
-        <li>Description: {{ restaurant.description }}</li>
-        <li>Location: {{ restaurant.location }}</li>
-        <li>Total user: {{ restaurant.user_count }} person{{ restaurant.user_count|pluralize }}</li>
+        <li>--------------{{ forloop.counter }}---------------- {% if user in choice.users.all %}<button id="join"  title="{{ choice.id }}">Wanna Join?</button>{% endif %}</li>
+        <li>Restaurant: {{ choice.restaurant.name|title }}</li>
+        <li>Rating: {{ choice.restaurant.rating }}</li>
+        <li>Location: {{ choice.restaurant.location }}</li>
+        <li>Total user: {{ choice.users.all|length }} person</li>
     </ul>
     {% endfor %}
 </div>
-{% endif %}
-{% if choices %}
-{% for choice in choices %}
-
 {% endfor %}
 {% endif %}

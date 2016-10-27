@@ -77,29 +77,19 @@ def show_choice(request):
     if request.method == 'POST':
         date = request.POST['date']
         choices = Choice.objects.filter(date=date)
-        restaurants = Restaurant.objects.filter(choice__date=date).annotate(user_count=Count('choice__users')).order_by('-user_count', 'name')
         user = User.objects.get(id=request.session['user_id'])
-        join = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
-            'restaurants': restaurants,
-            'join' : join,
+            'user': user,
             'choices': choices
         }
     return render(request, 'dojobites_app/choices.html', context)
 
 def show_rest(request):
     if request.method == 'POST':
-        date = request.POST['date']
-        rest_id = request.POST['restaurant']
-        r = Restaurant.objects.get(id=rest_id)
-        c = Choice.objects.get(date=date, restaurant=r)
-        users = c.users.all()
+        c = Choice.objects.get(id=request.POST['choice'])
         user = User.objects.get(id=request.session['user_id'])
-        join = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
-            'users' : users,
-            'restaurant' : r,
-            'join' : join
+            'user' : user,
         }
     return render(request, 'dojobites_app/restaurant.html', context)
 

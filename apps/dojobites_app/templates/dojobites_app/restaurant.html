@@ -1,13 +1,14 @@
 <ul>
-    <li>Cuisine: {{ restaurant.rating|title }}</li>
-    <li>Location: {{ restaurant.location }}</li>
+    <li>Name: {{choice.restaurant.name|title }}</li>
+    <li>Rating: {{ choice.restaurant.rating }}</li>
+    <li>Location: {{ choice.restaurant.location }}</li>
     <li>Joined users: </li>
     <li>
         <ol>
-        {% for user in users %}
+            {% for user in choices.users.all %}
             <li>{{ user.first_name|title }} {{ user.last_name|title }}</li>
-        {% endfor %}
+            {% endfor %}
         </ol>
     </li>
-    <li>{% if join %}<button id="join">Wanna Join?</button>{% endif %}</li>
+    <li>{% if not user in choice.users.all %}<button id="join">Wanna Join?</button>{% endif %}</li>
 </ul>

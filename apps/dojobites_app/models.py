@@ -81,6 +81,8 @@ class Choice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # def __str__(self):
     #     return self.restaurant + self.users.all
+    def count(self):
+        return len(self.users.all)
     objects = ChoiceManager()
 
 class Comment(models.Model):
