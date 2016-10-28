@@ -8,6 +8,10 @@ from django.db.models import Count
 def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
+    # choices = Choice.objects.all().values('id', 'date', 'users', 'restaurant')
+    # print "*"*70
+    # print "Choices:", choices
+    # print "*"*70
     context = {
         "restaurants" : Restaurant.objects.all(),
         "comments": Comment.objects.all(),
@@ -29,12 +33,18 @@ def join(request):
 def join_choice(request, choice_id):
     user = User.objects.get(id=request.session['user_id'])
     choice = Choice.objects.get(id=choice_id)
+    if user in choice.users.all():
+        return HttpResponse('You have already made your choice today!')
     choice.users.add(user)
     return HttpResponse('You made a choice!')
 
-
-def unjoin(request, restaurant_id):
-    return redirect(reverse('bites:index'))
+def unjoin_choice(request, choice_id):
+    user = User.objects.get(id=request.session['user_id'])
+    choice = Choice.objects.get(id=choice_id)
+    choice.users.remove(user)
+    if not len(choice.users.all()):
+        choice.delete()
+    return HttpResponse('You cancelled!')
 
 def comment(request):
     if request.method=='POST':
@@ -48,8 +58,8 @@ def comment(request):
 def new(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
-    restaurants = Restaurant.objects.all()
-    return render(request, 'dojobites_app/new.html')
+    user = User.objects.get(id=request.session['user_id'])
+    return render(request, 'dojobites_app/new.html', {'user' : user})
 
 def create(request):
     if request.method == "POST":
@@ -65,9 +75,10 @@ def details(request, restaurant_id):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     restaurant = Restaurant.objects.get(id=restaurant_id)
+    user = User.objects.get(id=request.session['user_id'])
     context = {
         'restaurant': restaurant,
-        #need to add query lookup for users but first need to add join functionality
+        'user' : user
     }
     return render(request, 'dojobites_app/details.html', context)
 
@@ -76,11 +87,13 @@ def show_choice(request):
         return redirect(reverse('users:index'))
     if request.method == 'POST':
         date = request.POST['date']
-        choices = Choice.objects.filter(date=date).annotate(num_users=Count('users')).order_by('-num_users')
+        choices = Choice.objects.filter(date=date).annotate(num_users=Count('users')).order_by('-num_users','-id')
         user = User.objects.get(id=request.session['user_id'])
+        valid = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
             'user': user,
-            'choices': choices
+            'choices': choices,
+            'valid' : valid
         }
     return render(request, 'dojobites_app/choices.html', context)
 
@@ -88,11 +101,14 @@ def show_rest(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     if request.method == 'POST':
+        date = request.POST['date']
         choice = Choice.objects.get(id=request.POST['choice'])
         user = User.objects.get(id=request.session['user_id'])
+        valid = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
             'user' : user,
-            'choice' : choice
+            'choice' : choice,
+            'valid' : valid
         }
     return render(request, 'dojobites_app/restaurant.html', context)
 
@@ -100,8 +116,10 @@ def calendar(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     restaurants = Restaurant.objects.all()
+    user = User.objects.get(id=request.session['user_id'])
     context = {
-        'restaurants': restaurants
+        'restaurants': restaurants,
+        'user' : user
     }
     return render(request, 'dojobites_app/calendar.html', context)
 

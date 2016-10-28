@@ -7,22 +7,33 @@
     <title>Restaurant Details</title>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Roboto" rel="stylesheet">
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen">
 </head>
 <body>
     <div id="container">
         <header>
             <h1>Dojo Bites</h1>
+            <h2>Welcome! {{ user.first_name|title }}</h2>
             <div class="nav_bar">
-                <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
-                <h4><a href="#">What's Nearby?</a></h4>
-                <h4><a href="#">My Calendar</a></h4>
-                <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
+                <h4><a href="{% url 'bites:index' %}">Where to Eat ?</a></h4>
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-                <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+                <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
+                <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
+                <h4><a href="#">What's Nearby ?</a></h4>
+                <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
             </div>
         </header>
+        <main id="rest">
+        {% if restaurant %}
+            <h3>{{restaurant.name|title}}</h3>
+            <ul class='restaurant_details'>
+                <li>Rating: {{restaurant.rating}}</li>
+                <li>Location: {{restaurant.location}}</li>
+            </ul>
+        {% endif %}
+        </main>
         {% if messages %}
         <ul class='messages'>
             {% for message in messages %}
@@ -30,15 +41,6 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <main>
-        {% if restaurant %}
-            <h2>{{restaurant.name}}</h2>
-            <ul class='restaurant_details'>
-                <li>Rating: {{restaurant.rating}}</li>
-                <li>Location: {{restaurant.location}}</li>
-            </ul>
-        {% endif %}
-        </main>
     </div>
 </body>
 </html>

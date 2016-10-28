@@ -16,17 +16,19 @@
             $('input#date').change(function() {
                 var date = $(this).val();
                 if(date)  update_date();
-                else  $('div#results').html('');
+                else $('div#results').html("<p class='hint'>Please select a date!</p>");
             })
             $('div#results').on('change', 'select#rest', function() {
                 var choice = $(this).val();
+                var date = $('input#date').val();
                 if(choice) {
+                    var serialized = $('form#choice').serialize()+'&date='+date;
                     $.ajax({
                         method : 'post',
                         url : $('form#choice').attr('action'),  // '/bites/show/restaurant'
-                        data : $('form#choice').serialize(),
+                        data : serialized,
                         success : function(resp){
-                                      $('div#user').html(resp);
+                                      $('div#restaurant').html(resp);
                                   }
                     })
                 }
@@ -34,7 +36,9 @@
             })
             $('div#results').on('click', 'button', function() {
                 var choice_id =  $(this).attr("title");
-                var url = "/bites/join/"+choice_id;
+                var action = $(this).attr("id");
+                if(action == 'join') var url = "/bites/join/"+choice_id;
+                else  var url = "/bites/unjoin/"+choice_id;
                 console.log("URL:", url);
                 $.ajax({
                     method : 'get',
@@ -64,32 +68,25 @@
             <h1>Dojo Bites</h1>
             <h2>Welcome! {{ user.first_name|title }}</h2>
             <div class="nav_bar">
-                <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
-                <h4><a href="#">What's Nearby?</a></h4>
+                <h4><a href="{% url 'bites:index' %}">Where to Eat ?</a></h4>
+                <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
                 <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
                 <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
-                <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
+                <h4><a href="#">What's Nearby ?</a></h4>
                 <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
             </div>
         </header>
-        {% if messages %}
-        <ul class='messages'>
-            {% for message in messages %}
-                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
         <main>
             <div id="voting">
                 <div id="choice">
                     <form id="date" action="{% url 'bites:show_choice' %}" method="post"> {% csrf_token %}
-                        <label>Select a Date:</label>
+                        <label>Select a Date: &nbsp;&nbsp;</label>
                         <input id="date" name="date" type="date">
                     </form>
                     <div id="results"></div>
                 </div>
                 <div id="comments">
-                    <h3>Comments:</h3>
+                    <!-- <h3>Comments:</h3>
                     {% if not comments %}
                         <h5>Be the first to write a comment!</h5>
                     {% else %}
@@ -102,14 +99,14 @@
                     <form action="{% url 'bites:comment' %}" method="POST"> {% csrf_token %}
                         <input type="text" name="content">
                         <input type="submit" value="Submit">
-                    </form>
+                    </form> -->
                 </div>
-                <table>
+                <table id="rest" width="750">
                     <thead>
-                        <th>Name:</th>
-                        <th>Rating:</th>
-                        <th>Location:</th>
-                        <th>Actions:</th>
+                        <th width="200">Name</th>
+                        <th width="60">Rating</th>
+                        <th width="380">Location</th>
+                        <th width="100">Actions</th>
                     </thead>
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
@@ -117,13 +114,20 @@
                                 <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
                                 <td>{{restaurant.rating}}</td>
                                 <td>{{restaurant.location|title}}</td>
-                                <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                                <td><a href="#">Directions</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}
                 </table>
             </div> <!-- end of voting -->
-        </main> <!-- end main_content -->
+        </main><!-- end main_content -->
+        {% if messages %}
+        <ul class='messages'>
+            {% for message in messages %}
+                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
-  </body>
+</body>
 </html>

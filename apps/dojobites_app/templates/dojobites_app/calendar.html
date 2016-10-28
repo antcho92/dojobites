@@ -4,42 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Calendar</title>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-    <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
+    <title>Dojo Bites</title>
+    <!-- <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script> -->
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Roboto" rel="stylesheet">
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen">
 </head>
 <body>
-    <header>
-        <h1>Dojo Bites Calendar</h1>
-        <div class="nav_bar">
-            <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
-            <h4><a href="#">What's Nearby?</a></h4>
-            <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
-            <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
-            <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-            <a href="{%url 'users:logout' %}"><button>Logout</button></a>
-        </div>
-    </header>
-    {% if messages %}
-    <ul class='messages'>
-        {% for message in messages %}
-            <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <form action="/bites/join" method="post"> {% csrf_token %}
-        Choose your date: <input type="date" name="date" value="">
-        <select name="restaurant">
-            <option value=""></option>
-            {% if restaurants %}
-                {% for restaurant in restaurants %}
-                    <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+    <div id="container">
+        <header>
+            <h1>Dojo Bites</h1>
+            <h2>Welcome! {{ user.first_name|title }}</h2>
+            <div class="nav_bar">
+                <h4><a href="{% url 'bites:index' %}">Where to Eat ?</a></h4>
+                <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
+                <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
+                <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
+                <h4><a href="#">What's Nearby ?</a></h4>
+                <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
+            </div>
+        </header>
+        <form id="join" action="/bites/join" method="post"> {% csrf_token %}
+            <p>Choose your date</p>
+            <input type="date" name="date" value="">
+            <p>Choose restaurant</p>
+            <select name="restaurant">
+                <option value=""></option>
+                {% if restaurants %}
+                    {% for restaurant in restaurants %}
+                        <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <button type="submit">Choose</button>
+            {% if messages %}
+            <ul class='messages'>
+                {% for message in messages %}
+                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
                 {% endfor %}
+            </ul>
             {% endif %}
-        </select>
-        <input type="submit" value="Choose">
-    </form>
+        </form>
+    </div>
 </body>
 </html>

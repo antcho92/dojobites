@@ -1,53 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DojoBites Add Restaurants</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script> -->
+    <title>DojoBites</title>
+    <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
     <!-- api key will be deleted periodically. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_SjAKKZf6xQTOw0oEz9ZCuDab4uta2Dg&libraries=places&callback=initMap" async defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Roboto" rel="stylesheet">
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/map.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen">
 </head>
-
 <body>
-    <header>
-        <h1>Dojo Bites</h1>
-        <div class="nav_bar">
-            <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
-            <h4><a href="#">What's Nearby?</a></h4>
-            <h4><a href="#">My Calendar</a></h4>
-            <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
-            <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-            <a href="{%url 'users:logout' %}"><button>Logout</button></a>
-        </div>
-    </header>
-    <a href="{% url 'bites:index' %}">Go Back</a>
-    <form action="{% url 'bites:create' %}" method="post"> {% csrf_token %}
-        <h1>Suggest a Restaurant!</h1>
-        <p>Name:</p>
-        <input type="text" name="name" id="placeName">
-        <p>Rating:</p>
-        <input type="text" name="rating" id='rating' value="">
-        <p>Location:</p>
-        <input type="text" name="location" id='address' value="">
-        <button type="submit">Suggest!</button>
-    </form>
-    {% if messages %} {% for message in messages %}
-    <p{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
-        {% endfor %} {% endif %}
-        <div id="map"></div>
-        <div id="results">
-            <ul>
-
+    <div id="container">
+        <header>
+            <h1>Dojo Bites</h1>
+            <h2>Welcome! {{ user.first_name|title }}</h2>
+            <div class="nav_bar">
+                <h4><a href="{% url 'bites:index' %}">Where to Eat ?</a></h4>
+                <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
+                <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
+                <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
+                <h4><a href="#">What's Nearby ?</a></h4>
+                <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
+            </div>
+        </header>
+        <form id="suggest" action="{% url 'bites:create' %}" method="post"> {% csrf_token %}
+            <h3>Suggest a Restaurant!</h3>
+            <p>Name:</p>
+            <input type="text" name="name" id="placeName">
+            <p>Rating:</p>
+            <input type="text" name="rating" id='rating' value="">
+            <p>Location:</p>
+            <input type="text" name="location" id='address' value="">
+            <button id="suggest" type="submit">Suggest!</button>
+            {% if messages %}
+            <ul class='messages'>
+                {% for message in messages %}
+                    <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+                {% endfor %}
             </ul>
-        </div>
+            {% endif %}
+        </form>
+        <div id="map"></div>
         <script type="text/javascript" src="{% static 'dojobites_app/js/map.js' %}"></script>
+    </div>
 </body>
-
 </html>

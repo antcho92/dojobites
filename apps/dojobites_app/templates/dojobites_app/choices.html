@@ -1,24 +1,25 @@
 {% if choices %}
-{% for choice in choices %}
-<form id="choice" action="{% url 'bites:show_rest' %}" method="post"> {% csrf_token %}
-    <label>Restaurant:</label>
-    <select id="rest" name="choice">
-        <option value=""></option>
+    <form id="choice" action="{% url 'bites:show_rest' %}" method="post"> {% csrf_token %}
+        <label>Restaurant: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <select id="rest" name="choice">
+            <option value=""></option>
+            {% for choice in choices %}
+                <option value="{{ choice.id }}">{{ choice.restaurant.name|title }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <div id="restaurant">
         {% for choice in choices %}
-            <option value="{{ choice.id }}">{{ choice.restaurant.name|title }}</option>
+        <ul>
+            <li id="rest">{{ choice.restaurant.name|title }}</li>
+            <li><span>Rating:&nbsp;&nbsp;</span>{{ choice.restaurant.rating }}</li>
+            <li><span>Location:&nbsp;&nbsp;</span>{{ choice.restaurant.location }}</li>
+            <li><span>Joined user:&nbsp;&nbsp;</span>{{ choice.num_users }} person{{ choice.num_users|pluralize }}</li>
+            <li>{% if valid %}<button id="join" title="{{ choice.id }}">Join?</button>{% endif %}{% if user in choice.users.all %}<button id="unjoin" title="{{ choice.id }}">Unjoin?</button>{% endif %}
+            </li>
+        </ul>
         {% endfor %}
-    </select>
-</form>
-<div id="user">
-    {% for choice in choices %}
-    <ul>
-        <li>--------------{{ forloop.counter }}---------------- {% if user not in choice.users.all %}<button id="join"  title="{{ choice.id }}">Wanna Join?</button>{% endif %}</li>
-        <li>Restaurant: {{ choice.restaurant.name|title }}</li>
-        <li>Rating: {{ choice.restaurant.rating }}</li>
-        <li>Location: {{ choice.restaurant.location }}</li>
-        <li>Total user: {{ choice.num_users }} person{{ choice.num_users|pluralize }}</li>
-    </ul>
-    {% endfor %}
-</div>
-{% endfor %}
+    </div>
+{% else %}
+    <p class="hint">No choice found on this day!</p>
 {% endif %}

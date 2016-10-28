@@ -1,8 +1,8 @@
 <ul>
-    <li>Name: {{choice.restaurant.name|title }}</li>
-    <li>Rating: {{ choice.restaurant.rating }}</li>
-    <li>Location: {{ choice.restaurant.location }}</li>
-    <li>Joined users: </li>
+    <li id="rest">{{ choice.restaurant.name|title }}</li>
+    <li><span>Rating:&nbsp;&nbsp;</span>{{ choice.restaurant.rating }}</li>
+    <li><span>Location:&nbsp;&nbsp;</span>{{ choice.restaurant.location }}</li>
+    <li><span>Who Joined:&nbsp;&nbsp;</span></li>
     <li>
         <ol>
             {% for user in choice.users.all|dictsort:'first_name' %}
@@ -10,5 +10,6 @@
             {% endfor %}
         </ol>
     </li>
-    <li>{% if user not in choice.users.all %}<button id="join" title="{{ choice.id }}">Wanna Join?</button>{% endif %}</li>
+    <li>{% if valid %}<button id="join" title="{{ choice.id }}">Join?</button>{% endif %}{% if user in choice.users.all %}<button id="unjoin" title="{{ choice.id }}">Unjoin?</button>{% endif %}
+    </li>
 </ul>

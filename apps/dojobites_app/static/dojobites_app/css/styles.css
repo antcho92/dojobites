@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', arial, sans-serif;
-    /*font-family: 'Comfortaa', cursive;*/
     color: #3c4c5b;
 }
 div#container {
@@ -14,11 +13,12 @@ div#container {
         display: inline-block;
     }
     h1 {
-        font-size: 2.5em;
-        font-family: 'Comfortaa', cursive;
+        font-size: 2.8em;
+        font-family: 'Comfortaa', arial;
         letter-spacing: 1px;
         text-shadow: 0 0 10px silver;
         margin-bottom: 10px;
+        margin-left: 20px;
     }
     h2 {
         float: right;
@@ -47,68 +47,140 @@ div#container {
             }
 main{
     width: 100%;
-    border: 1px solid #3c4c5b;
+    height: 600px;
     margin-top: 10px;
 }
-#voting{
-    width: 95%;
-    max-height: 400px;
-    border: 1px solid #3c4c5b;
-    margin: 20px;
-    padding: 5px 10px 5px 10px;
-}
-    #choice, #comments, table {
-        display: inline-block;
-        vertical-align: top;
-        margin-right: 50px;
+    div#voting{
+        padding: 10px;
     }
-    div#choice {
-        width: 300px;
-    }
-        div#results {
-            height: 350px;
+        div#choice, div#comments, table#rest {
+            display: inline-block;
+            vertical-align: top;
+        }
+        div#choice, div#comments {
+            margin-right: 20px;
+        }
+        div#choice {
+            width: 350px;
         }
             form#date input {
                 font-size: 1em;
+                outline: none;
+                border: 1px solid silver;
+                border-radius: 2px;
+                padding: 2px 5px;
+            }
+            input:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 100px #fff inset;
             }
             form#choice select {
                 font-size: 1em;
-                width: 160px;
-                height: 25px;
-                margin-top: 15px;
+                width: 155px;
+                height: 30px;
+                outline: none;
+                border: 1px solid silver;
+                border-radius: 2px;
+                padding: 2px 5px;
+                margin-top: 10px;
                 margin-bottom: 10px;
             }
-            div#user {
-                height: 300px;
+            p.hint {
+                font-size: 1.5em;
+                font-style: italic;
+                margin-top: 30px;
+            }
+            div#restaurant {
+                width: 90%;
+                height: 450px;
                 overflow: auto;
+                margin: 0 auto;
             }
-                #user ul {
+            ::-webkit-scrollbar {
+                -webkit-appearance: none;
+                width: 7px;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: rgba(0,0,0,.5);
+                -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+            }
+                #restaurant ul {
                     list-style: none;
+                    margin-bottom: 10px;
                 }
-                    #user ul li {
-                        margin-left: 30px;
+                    #restaurant ul li#rest {
+                        color: white;
+                        background-color: #009ac7;
+                        text-align: center;
+                        padding: 2px 0;
                     }
-    #comments{
-        min-height: 400px;
-    }
-    table{
-        border-collapse: collapse;
-        text-align: center;
-    }
-        thead{
-            border-bottom: 2px solid #3c4c5b;
+                    #restaurant ul li {
+                        margin-bottom: 4px;
+                    }
+                        li span {
+                            color: #009ac7;
+                        }
+                        #restaurant ul li ol {
+                            list-style: none;
+                            margin-left: 100px;
+                        }
+                        button#join, button#unjoin {
+                            font-size: 0.9em;
+                            border: none;
+                            outline: none;
+                            cursor: pointer;
+                            box-shadow: 1px 1px 2px #eee;
+                            padding: 2px 6px;
+                            margin-left: 245px;
+                        }
+                        button#unjoin {
+                            color: orangered;
+                            background-color: white;
+                            font-weight: bold;
+                            border: 1px solid orangered;
+                        }
+                        button#unjoin:hover {
+                            color: white;
+                            background-color: orangered;
+                        }
+                        button#join {
+                            color: #009ac7;
+                            background-color: white;
+                            font-weight: bold;
+                            border: 1px solid #009ac7;
+                        }
+                        button#join:hover {
+                            color: white;
+                            background-color: #009ac7;
+                        }
+        #comments{
+            width: 260px;
+            min-height: 550px;
+            outline: 1px dashed gray;
         }
-            th{
-                height: 40px;
-                padding: 5px 10px;
-                border-bottom: 1px solid #3c4c5b;
+        table#rest {
+            height: 450px;
+            overflow: auto;
+            text-align: center;
+        }
+            #rest tr:nth-last-of-type(even) {
+                background-color: #f5fafe
             }
-            td{
-                height: 30px;
-                border-bottom: 1px solid #3c4c5b;
+            th {
+                height: 40px;
+                font-size: 1em;
+                color: white;
+                background-color: #009ac7;
+            }
+            td {
+                height: 40px;
+            }
+            table#rest td a {
+                color: #009ac7;
             }
 .error {
-    color: red;
+    color: orangered;
+    margin-bottom: 10px;
 }
 .success {
     color: green;
@@ -116,3 +188,116 @@ main{
 ul.messages {
     list-style: none;
 }
+/***************************new.html*******************************/
+form#suggest, #map {
+    display: inline-block;
+    vertical-align: top;
+}
+form#suggest {
+    width: 320px;
+    margin: 20px 100px 20px 70px;
+}
+    #suggest h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    #suggest p {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+    }
+    #suggest input {
+        width: 300px;
+        font-size: 1em;
+        outline: none;
+        border: 1px solid silver;
+        border-radius: 2px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+    }
+        button#suggest {
+            font-size: 1em;
+            color: white;
+            background-color: #009ac7;
+            border: none;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 1px 1px 2px silver;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            padding: 4px 10px;
+        }
+        button#suggest:hover {
+            background-color: #007394;
+        }
+div#map {
+    width: 800px;
+    height: 600px;
+    border: 1px solid silver;
+    box-shadow: 0px 0px 4px silver;
+    margin-top: 20px;
+}
+/***********************calendar.html***********************************/
+form#join {
+    width: 350px;
+    margin: 30px 70px;
+}
+    #join p {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        margin-top: 20px;
+    }
+    #join input {
+        width: 300px;
+        font-size: 1em;
+    }
+    #join select {
+        width: 300px;
+        font-size: 1.1em;
+        outline: none;
+        padding: 5px;
+    }
+    #join button {
+        font-size: 1em;
+        color: white;
+        background-color: #009ac7;
+        border: none;
+        border-radius: 2px;
+        outline: none;
+        box-shadow: 1px 1px 2px silver;
+        cursor: pointer;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 4px 10px;
+    }
+        #join button:hover {
+        background-color: #007394;
+    }
+/***********************profile.html***********************************/
+div#accordion {
+    width: 45%;
+    margin: 25px 0 0 60px;
+}
+    #accordion ul {
+        list-style: none;
+    }
+        #accordion ul li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        #accordion ul li:first-of-type {
+            margin-left: 40px;
+        }
+/***********************details.html***********************************/
+main#rest {
+    margin: 50px 0 0 80px;
+}
+    #rest h3 {
+        margin-bottom: 10px;
+    }
+    #rest ul {
+        list-style: none;
+    }
+        #rest ul li {
+            margin-bottom: 10px;
+        }
