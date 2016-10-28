@@ -27,31 +27,38 @@
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
                 <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
                 <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
-                <h4><a href="#">What's Nearby ?</a></h4>
                 <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
             </div>
         </header>
-        <div id="accordion">
-        {% if choices %}
-            {% for choice in choices %}
-            <h3>{{choice.date|date:'l, F d, Y'}}</h3>
-            <div>
-                <h3>{{choice.restaurant.name|title}}</h3>
-                <p>{{choice.restaurant.location}}</p>
-                {% if choice.users.all|length > 1 %}
-                    <p>You're going with:</p>
-                    <ul>
-                        {% for user in choice.users.all %}
-                            {% if user != u %}
-                                <li>{{user.first_name|title}} {{user.last_name|title}}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            {% endfor %}
-        {% endif %}
+        <div id="user">
+            <p><b>Name:</b> &nbsp;&nbsp;{{ u.first_name|title }} {{ u.last_name|title }}</p>
+            <p><b>Email:</b>&nbsp;&nbsp; {{ u.email }}</p>
         </div>
+        <main id="profile">
+        {% if not choices %}
+            <h3 id="warn">You haven't gone anywhere for lunch yet! Would you like to go <a href="{% url 'bites:calendar' %}">somewhere</a>?</h3>
+        {% else %}
+            <div id="accordion">
+                {% for choice in choices %}
+                <h3>{{choice.date|date:'l, F d, Y'}}</h3>
+                <div>
+                    <h3>{{choice.restaurant.name|title}}</h3>
+                    <p>{{choice.restaurant.location}}</p>
+                    {% if choice.users.all|length > 1 %}
+                        <p>You're going with:</p>
+                        <ul>
+                            {% for user in choice.users.all %}
+                                {% if user != u %}
+                                    <li>{{user.first_name|title}} {{user.last_name|title}}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        </main>
     </div>
 </body>
 </html>

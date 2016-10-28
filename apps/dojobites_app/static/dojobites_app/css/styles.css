@@ -335,20 +335,41 @@ form#join {
             background-color: #007394;
         }
 /***********************profile.html***********************************/
-div#accordion {
-    width: 45%;
-    margin: 25px 0 0 60px;
+div#user, main#profile {
+    display: inline-block;
+    vertical-align: top;
 }
-    #accordion ul {
-        list-style: none;
+div#user {
+    width: 300px;
+    margin: 40px;
+}
+    #user p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
     }
-        #accordion ul li {
-            display: inline-block;
-            margin-right: 10px;
+        #user p b {
+            color: #009ac7;
         }
-        #accordion ul li:first-of-type {
-            margin-left: 40px;
+main#profile {
+    width: 800px;
+    margin-left: 50px;
+}
+    h3#warn {
+        margin-top: 50px;
+    }
+    div#accordion {
+        margin: 25px 0 0 60px;
+    }
+        #accordion ul {
+            list-style: none;
         }
+            #accordion ul li {
+                display: inline-block;
+                margin-right: 10px;
+            }
+            #accordion ul li:first-of-type {
+                margin-left: 40px;
+            }
 /***********************details.html***********************************/
 main#rest {
     margin: 50px 0 0 80px;
