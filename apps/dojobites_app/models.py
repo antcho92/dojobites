@@ -7,6 +7,7 @@ class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
         errors = []
         name = input['name']
+        rating = input['rating']
         location = input['location']
         if not name or name.isspace():
             errors.append('Please enter the name!')
