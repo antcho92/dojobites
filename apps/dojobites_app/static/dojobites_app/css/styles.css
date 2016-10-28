@@ -6,6 +6,9 @@
     /*font-family: 'Comfortaa', cursive;*/
     color: #3c4c5b;
 }
+body {
+    margin: 50px;
+}
 .nav_bar{
     border-top: 2px solid black;
     border-bottom: 2px solid black;
