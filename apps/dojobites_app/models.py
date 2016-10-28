@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from ..login_reg_app.models import User
+from ..login_register.models import User
 from django.db import models
 from datetime import datetime
 
