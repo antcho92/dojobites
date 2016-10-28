@@ -21,7 +21,6 @@
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
                 <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
                 <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
-                <h4><a href="#">What's Nearby ?</a></h4>
                 <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
             </div>
         </header>
@@ -30,7 +29,7 @@
             <p>Name:</p>
             <input type="text" name="name" id="placeName">
             <p>Rating:</p>
-            <input type="text" name="rating" id='rating' value="">
+            <input type="number" min="1" max="5" step="0.1" name="rating" id='rating' value="">
             <p>Location:</p>
             <input type="text" name="location" id='address' value="">
             <button id="suggest" type="submit">Suggest!</button>
