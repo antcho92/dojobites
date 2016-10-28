@@ -19,7 +19,7 @@ $(document).ready(function() {
         else  update_date();
     })
     $('div#results').on('click', 'button#join', function() {
-        var choice_id =  $(this).attr("title");
+        var choice_id =  $(this).val();
         var url = "/bites/join/"+choice_id;
         console.log("URL:", url);
         $.ajax({
@@ -32,7 +32,7 @@ $(document).ready(function() {
         update_date();
     })
     $('div#results').on('click', 'button#unjoin', function() {
-        var choice_id =  $(this).attr("title");
+        var choice_id =  $(this).val();
         var url = "/bites/unjoin/"+choice_id;
         console.log("URL:", url);
         $.ajax({

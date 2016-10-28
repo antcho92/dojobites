@@ -12,7 +12,7 @@
 <div id="user">
     {% for choice in choices %}
     <ul>
-        <li>--------------{{ forloop.counter }}---------------- {% if user not in choice.users.all %}<button id="join"  title="{{ choice.id }}">Wanna Join?</button>{% else %}<button id="unjoin"  title="{{ choice.id }}">Unjoin group</button>{% endif %}</li>
+        <li>--------------{{ forloop.counter }}---------------- {% if user not in choice.users.all %}<button id="join"  value="{{ choice.id }}">Wanna Join?</button>{% else %}<button id="unjoin"  value="{{ choice.id }}">Unjoin group</button>{% endif %}</li>
         <li>Restaurant: {{ choice.restaurant.name|title }}</li>
         <li>Rating: {{ choice.restaurant.rating }}</li>
         <li>Location: {{ choice.restaurant.location }}</li>
