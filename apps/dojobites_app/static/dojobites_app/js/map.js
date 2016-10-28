@@ -13,7 +13,7 @@ window.initMap = function() {
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
     location: codingdojo,
-    radius: 500,
+    radius: 450,
     type: ['food'],
     rankBy: google.maps.places.RankBy.PROMINENCE
   }, callback);
