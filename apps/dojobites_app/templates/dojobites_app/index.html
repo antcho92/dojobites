@@ -11,8 +11,22 @@
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen">
     <link rel="icon" href="{% static 'dojobites_app/images/favicon.ico' %}">
     <script src="{% static 'dojobites_app/js/app.js' %}" charset="utf-8"></script>
+    <script>
+        window.onload = function() {
+            var today = $('body').attr('id');
+            var serialized = $('form#date').serialize()+today;
+            $.ajax({
+                method : 'post',
+                url : '/bites/show/choice',
+                data : serialized,
+                success : function(resp){
+                    $('div#results').html(resp);
+                }
+            })
+        }
+    </script>
 </head>
-<body>
+<body id="{{date}}">
     <div id="container">
         <header>
             <h1>Dojo Bites</h1>

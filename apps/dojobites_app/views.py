@@ -11,16 +11,16 @@ def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
     user = User.objects.get(id=request.session['user_id'])
-    # datetime.now()
+    date = datetime.now().strftime('%Y-%m-%d')
     # d = datetime.now() - timedelta(hours=8) #Greenwich is currently 8 hours ahead of USA West Coast Time
     # upcoming = Choice.objects.filter(users=user).exclude(date__lte=d)
     # for i in range(len(upcoming)):
     #     print upcoming[i].date
     context = {
         "restaurants" : Restaurant.objects.order_by('-rating'),
-        "comments": Comment.objects.all(),
+        "comments" : Comment.objects.all(),
         "user" : User.objects.get(id=request.session['user_id']),
-        # "upcoming": upcoming
+        'date': date
     }
     return render(request, 'dojobites_app/index.html', context)
 
@@ -103,7 +103,7 @@ def show_choice(request):
         return redirect(reverse('users:index'))
     if request.method == 'POST':
         date = request.POST['date']
-        choices = Choice.objects.filter(date=date).annotate(num_users=Count('users')).order_by('-num_users','-id')
+        choices = Choice.objects.filter(date=date).annotate(num_users=Count('users')).order_by('-num_users','-restaurant__rating')
         user = User.objects.get(id=request.session['user_id'])
         valid = False if Choice.objects.filter(date=date, users=user).exists() else True
         context = {
