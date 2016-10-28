@@ -15,6 +15,7 @@
         window.onload = function() {
             var today = $('body').attr('id');
             var serialized = $('form#date').serialize()+today;
+            $('input#date').val(today);
             $.ajax({
                 method : 'post',
                 url : '/bites/show/choice',
