@@ -155,9 +155,25 @@ main{
                         }
         div#directions {
             width: 280px;
-            min-height: 550px;
-            outline: 1px dashed gray;
+            height: 500px;
+            overflow: auto;
         }
+            #directions h3 span {
+                color: #009ac7;
+            }
+            #directions p {
+                border-bottom: 1px solid silver;
+                margin-top: 5px;
+                padding-bottom: 5px;
+            }
+            ul#direction {
+                list-style: none;
+                margin-top: 10px;
+            }
+                #direction li {
+                    margin-bottom: 15px;
+                    margin-left: 20px;
+                }
         table#rest {
             height: 450px;
             overflow: auto;

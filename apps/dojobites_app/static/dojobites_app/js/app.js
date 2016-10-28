@@ -45,6 +45,19 @@ $(document).ready(function() {
             }
         })
     }
+
+    $('span.direct').click(function() {
+        var rest_id = $(this).attr('id');
+        var url = '/bites/show/direction/'+rest_id
+        $.ajax({
+            url : url,
+            method : 'get',
+            success : function(res) {
+                // console.log("RES:",res);
+                $('div#directions').html(res)
+            }
+        })
+    })
 })
 
 //

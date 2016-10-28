@@ -1,0 +1,13 @@
+{% if 'error' not in result %}
+    <h3>Directions from <span>CodingDojo</span> to <span>{{ restaurant }}</span></h3>
+    <p>{{ result.time }} ({{ result.distance }}les) by walking</p>
+    <ul id="direction">
+    {% for step in result.steps %}
+        {% autoescape off %}
+            <li><b>{{ forloop.counter }}.</b> &nbsp;&nbsp;{{ step.html_instructions }}</li>
+        {% endautoescape %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p id="error">{{ result.error }}</p>
+{% endif %}

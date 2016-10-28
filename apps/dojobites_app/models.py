@@ -53,7 +53,7 @@ class ChoiceManager(models.Manager):
             errors.append("Must choose and date and restaurant")
         if rest_id and date:
             today = datetime.now().strftime('%Y-%m-%d')
-            if date <= today:
+            if date < today:
                 errors.append("Meal date must be in the future")
         if errors:
             return (False, errors)

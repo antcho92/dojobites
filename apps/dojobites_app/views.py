@@ -4,22 +4,23 @@ from django.urls import reverse
 from ..login_register.models import User
 from .models import *
 from django.db.models import Count
+import requests
 from datetime import datetime, timedelta
 
 def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
-    datetime.now()
     user = User.objects.get(id=request.session['user_id'])
-    d = datetime.now() - timedelta(hours=8) #Greenwich is currently 8 hours ahead of USA West Coast Time
-    upcoming = Choice.objects.filter(users=user).exclude(date__lte=d)
-    for i in range(len(upcoming)):
-        print upcoming[i].date
+    # datetime.now()
+    # d = datetime.now() - timedelta(hours=8) #Greenwich is currently 8 hours ahead of USA West Coast Time
+    # upcoming = Choice.objects.filter(users=user).exclude(date__lte=d)
+    # for i in range(len(upcoming)):
+    #     print upcoming[i].date
     context = {
         "restaurants" : Restaurant.objects.all(),
         "comments": Comment.objects.all(),
         "user" : User.objects.get(id=request.session['user_id']),
-        "upcoming": upcoming
+        # "upcoming": upcoming
     }
     return render(request, 'dojobites_app/index.html', context)
 
@@ -115,6 +116,33 @@ def show_rest(request):
             'valid' : valid
         }
     return render(request, 'dojobites_app/restaurant.html', context)
+
+def direction(request, restaurant_id):
+    r = Restaurant.objects.get(id=restaurant_id)
+    payload = {
+                'origin' : '10777 Main St Bellevue WA',
+                'destination' : r.location,
+                'mode' : 'walking',
+                'key' : 'AIzaSyAhMCk1vqD_DKO1L3UH_Z_gJnK5-MUz6Yo'
+            }
+    url = "https://maps.googleapis.com/maps/api/directions/json"
+    res = requests.get(url, payload).json()
+    if res['status'] == 'OK':
+        context = {
+            'result' : {
+                'from' : res['routes'][0]['legs'][0]['start_address'],
+                'to' : res['routes'][0]['legs'][0]['end_address'],
+                'distance' : res['routes'][0]['legs'][0]['distance']['text'],
+                'time' : res['routes'][0]['legs'][0]['duration']['text'],
+                'steps' : res['routes'][0]['legs'][0]['steps']
+            },
+            'restaurant' : r.name
+        }
+    else:
+        context = {
+            'result' : {'error' : "Directions from {} to {} are not available...".format('CodingDojo', r.name)}
+        }
+    return render(request, 'dojobites_app/directions.html', context)
 
 def calendar(request):
     if 'user_id' not in request.session:

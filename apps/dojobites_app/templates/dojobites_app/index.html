@@ -65,7 +65,7 @@
                                 <td><a href="{% url 'bites:details' restaurant.id %}">{{restaurant.name|title}}</a></td>
                                 <td>{{restaurant.rating}}</td>
                                 <td>{{restaurant.location|title}}</td>
-                                <td><a href="#">Directions</a></td>
+                                <td><span class="direct" id="{{ restaurant.id }}">Directions</span></td>
                                 <!-- {% for upcoming in upcoming %}
                                     {% if upcoming.restaurant.id == restaurant.id %}
                                         <td>{{upcoming.date}}</td>
