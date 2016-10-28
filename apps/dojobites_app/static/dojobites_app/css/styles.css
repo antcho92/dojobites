@@ -5,10 +5,14 @@
     font-family: arial;
 }
 .nav_bar{
-    border: 2px solid black;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
     justify-content: space-around;
     display: inline-flex;
     width: 100%
+}
+header{
+    margin-bottom: 10px;
 }
 header h4{
     margin: 10px;
@@ -17,14 +21,15 @@ header button{
     margin: 10px;
 }
 main{
-    border: 1px solid black;
+    /*border: 1px solid black;*/
+    padding: 0px 10px 0px 10px;
     margin-top: 10px;
     width:100%;
 }
 #voting{
     width: 1300px;
     max-height: 400px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 20px;
     padding: 5px 10px 5px 10px;
 }
@@ -34,7 +39,7 @@ main{
         margin-right: 50px;
     }
     div#choice {
-        width: 300px;
+
     }
         div#results {
             height: 350px;
@@ -60,8 +65,7 @@ main{
                         margin-left: 30px;
                     }
     #comments{
-        min-height: 400px;
-        outline: 1px dashed gray;
+
     }
     table{
         border-collapse: collapse;
@@ -79,6 +83,11 @@ main{
                 height: 30px;
                 border-bottom: 1px black solid;
             }
+.middle_content{ /*div*/
+    padding: 5px 10px 10px 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .error {
   color: red;
 }

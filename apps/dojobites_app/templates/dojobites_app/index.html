@@ -66,7 +66,7 @@
                 <h4><a href="{% url 'bites:calendar' %}">My Calendar</a></h4>
                 <h4><a href="{% url 'bites:profile' %}">My Profile</a></h4>
                 <h4><a href="{% url 'bites:new' %}">Suggest a Restaurant</a></h4>
-                <a href="{%url 'users:logout' %}"><button>Logout</button></a>
+                <h4><a href="{%url 'users:logout' %}">Logout</a></h4>
             </div>
         </header>
         {% if messages %}
@@ -108,6 +108,7 @@
                         <th>Rating:</th>
                         <th>Location:</th>
                         <th>Actions:</th>
+                        <th>Next Planned Meal:</th>
                     </thead>
                     {% if restaurants %}
                         {% for restaurant in restaurants %}
@@ -116,6 +117,11 @@
                                 <td>{{restaurant.rating}}</td>
                                 <td>{{restaurant.location|title}}</td>
                                 <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                                {% for upcoming in upcoming %}
+                                    {% if upcoming.restaurant.id == restaurant.id %}
+                                        <td>{{upcoming.date}}</td>
+                                    {% endif %}
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                     {% endif%}
