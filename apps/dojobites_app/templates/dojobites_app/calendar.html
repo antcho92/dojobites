@@ -37,14 +37,21 @@
                 {% endif %}
             </select>
             <button type="submit">Choose</button>
-            {% if messages %}
-            <ul class='messages'>
-                {% for message in messages %}
-                <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
         </form>
+        <form id="join_random" action="/bites/random" method="post"> {% csrf_token %}
+            <h3>Can't pick a restaurant?</h3>
+            <p>Choose your date</p>
+            <input type="date" name="date" value="">
+            <button type="submit">Surprise me!</button>
+
+        </form>
+        {% if messages %}
+        <ul class='messages'>
+            {% for message in messages %}
+            <li  {% if message.tags %}class="{{message.tags}}"{% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>

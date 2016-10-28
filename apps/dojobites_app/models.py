@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from ..login_register.models import User
 from django.db import models
 from datetime import datetime
+from random import randint
 
 class RestaurantManager(models.Manager):
     def validate_restaurant(self, input):
@@ -60,6 +61,36 @@ class ChoiceManager(models.Manager):
             return (False, errors)
         else:
             r = Restaurant.objects.get(id=rest_id)
+            if Choice.objects.filter(date=date, users=user).exists():
+                errors.append("You have already made your choice today!")
+                return (False, errors)
+            choice = Choice.objects.filter(date=date, restaurant=r)
+            if not choice.exists():
+                choice = Choice.objects.create(date=date, restaurant=r)
+                choice.users.add(user)
+            else:
+                choice[0].users.add(user)
+            return (True, "You made a choice!")
+
+    def addRandChoice(self, input, user):
+        errors = []
+        restaurants = Restaurant.objects.all()
+        restaurant_ids = []
+        for restaurant in restaurants:
+            restaurant_ids.append(restaurant.id)
+        rand_id = randint(1, len(restaurant_ids))
+        print rand_id
+        date = input['date']
+        if not date:
+            errors.append("Must choose a date")
+        if rand_id and date:
+            today = datetime.now().strftime('%Y-%m-%d')
+            if date < today:
+                errors.append("Meal date must be in the future")
+        if errors:
+            return (False, errors)
+        else:
+            r = Restaurant.objects.get(id=rand_id)
             if Choice.objects.filter(date=date, users=user).exists():
                 errors.append("You have already made your choice today!")
                 return (False, errors)

@@ -264,6 +264,7 @@ div#map {
 form#join {
     width: 350px;
     margin: 30px 70px;
+    display: inline-block;
 }
     #join p {
         font-size: 1.2em;
@@ -296,6 +297,43 @@ form#join {
         #join button:hover {
         background-color: #007394;
     }
+
+    form#join_random {
+        width: 350px;
+        margin-left: 50px;
+        margin-top: 50px;
+        display: inline-block;
+        vertical-align: top;
+    }
+        #join_random p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            display: block;
+        }
+        #join_random h3 {
+            display: block;
+        }
+        #join_random input {
+            width: 300px;
+            font-size: 1em;
+        }
+        #join_random button {
+            font-size: 2em;
+            color: white;
+            background-color: #009ac7;
+            border: none;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 1px 1px 2px silver;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 4px 10px;
+        }
+            #join_random button:hover {
+            background-color: #007394;
+        }
 /***********************profile.html***********************************/
 div#accordion {
     width: 45%;

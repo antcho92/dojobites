@@ -43,6 +43,17 @@ def join_choice(request, choice_id):
     choice.users.add(user)
     return HttpResponse('You made a choice!')
 
+def random(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['user_id'])
+        validation = Choice.objects.addRandChoice(request.POST, user)
+        if validation[0]:
+            messages.success(request, validation[1])
+        else:
+            for error in validation[1]:
+                messages.error(request, error)
+    return redirect(reverse('bites:calendar'))
+
 def unjoin_choice(request, choice_id):
     user = User.objects.get(id=request.session['user_id'])
     choice = Choice.objects.get(id=choice_id)
