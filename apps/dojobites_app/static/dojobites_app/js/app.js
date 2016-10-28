@@ -31,9 +31,10 @@ $(document).ready(function() {
             url : url,
             success : function(resp){
                         console.log("Response:", resp);
+                        update_date();
                       }
         })
-        update_date();
+
     })
     function update_date() {
         $.ajax({
