@@ -17,7 +17,7 @@ def index(request):
     # for i in range(len(upcoming)):
     #     print upcoming[i].date
     context = {
-        "restaurants" : Restaurant.objects.all(),
+        "restaurants" : Restaurant.objects.order_by('-rating'),
         "comments": Comment.objects.all(),
         "user" : User.objects.get(id=request.session['user_id']),
         # "upcoming": upcoming
@@ -170,6 +170,6 @@ def profile(request):
     u = User.objects.get(id=request.session['user_id'])
     context = {
         'u' : u,
-        'choices': u.choices.all(),
+        'choices': u.choices.order_by('date'),
     }
     return render(request, 'dojobites_app/profile.html', context)
