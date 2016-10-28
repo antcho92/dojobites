@@ -4,18 +4,22 @@ from django.urls import reverse
 from ..login_register.models import User
 from .models import *
 from django.db.models import Count
+from datetime import datetime, timedelta
 
 def index(request):
     if 'user_id' not in request.session:
         return redirect(reverse('users:index'))
-    # choices = Choice.objects.all().values('id', 'date', 'users', 'restaurant')
-    # print "*"*70
-    # print "Choices:", choices
-    # print "*"*70
+    datetime.now()
+    user = User.objects.get(id=request.session['user_id'])
+    d = datetime.now() - timedelta(hours=8) #Greenwich is currently 8 hours ahead of USA West Coast Time
+    upcoming = Choice.objects.filter(users=user).exclude(date__lte=d)
+    for i in range(len(upcoming)):
+        print upcoming[i].date
     context = {
         "restaurants" : Restaurant.objects.all(),
         "comments": Comment.objects.all(),
-        "user" : User.objects.get(id=request.session['user_id'])
+        "user" : User.objects.get(id=request.session['user_id']),
+        "upcoming": upcoming
     }
     return render(request, 'dojobites_app/index.html', context)
 

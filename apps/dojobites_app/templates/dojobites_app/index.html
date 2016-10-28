@@ -11,56 +11,7 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen">
     <link rel="icon" href="{% static 'dojobites_app/images/favicon.ico' %}">
-    <script>
-        $(document).ready(function() {
-            $('input#date').change(function() {
-                var date = $(this).val();
-                if(date)  update_date();
-                else $('div#results').html("<p class='hint'>Please select a date!</p>");
-            })
-            $('div#results').on('change', 'select#rest', function() {
-                var choice = $(this).val();
-                var date = $('input#date').val();
-                if(choice) {
-                    var serialized = $('form#choice').serialize()+'&date='+date;
-                    $.ajax({
-                        method : 'post',
-                        url : $('form#choice').attr('action'),  // '/bites/show/restaurant'
-                        data : serialized,
-                        success : function(resp){
-                                      $('div#restaurant').html(resp);
-                                  }
-                    })
-                }
-                else  update_date();
-            })
-            $('div#results').on('click', 'button', function() {
-                var choice_id =  $(this).attr("title");
-                var action = $(this).attr("id");
-                if(action == 'join') var url = "/bites/join/"+choice_id;
-                else  var url = "/bites/unjoin/"+choice_id;
-                console.log("URL:", url);
-                $.ajax({
-                    method : 'get',
-                    url : url,
-                    success : function(resp){
-                                console.log("Response:", resp);
-                              }
-                })
-                update_date();
-            })
-            function update_date() {
-                $.ajax({
-                    method : 'post',
-                    url : $('form#date').attr('action'),  // '/bites/show/choice'
-                    data : $('form#date').serialize(),
-                    success : function(resp){
-                        $('div#results').html(resp);
-                    }
-                })
-            }
-        })
-    </script>
+    <script src="{% static 'dojobites_app/js/app.js' %}" charset="utf-8"></script>
 </head>
 <body>
     <div id="container">
@@ -115,6 +66,12 @@
                                 <td>{{restaurant.rating}}</td>
                                 <td>{{restaurant.location|title}}</td>
                                 <td><a href="#">Directions</a></td>
+                                <!-- <td><a href="{% url 'bites:join' %}">Join</a> <a href="{% url 'bites:unjoin' restaurant.id %}">Unjoin</a></td>
+                                {% for upcoming in upcoming %}
+                                    {% if upcoming.restaurant.id == restaurant.id %}
+                                        <td>{{upcoming.date}}</td>
+                                    {% endif %}
+                                {% endfor %} -->
                             </tr>
                         {% endfor %}
                     {% endif%}
