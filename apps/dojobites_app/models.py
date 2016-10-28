@@ -78,7 +78,7 @@ class ChoiceManager(models.Manager):
         restaurant_ids = []
         for restaurant in restaurants:
             restaurant_ids.append(restaurant.id)
-        rand_id = randint(1, len(restaurant_ids))
+        rand_id = randint(0, len(restaurant_ids)-1)
         print rand_id
         date = input['date']
         if not date:
@@ -90,7 +90,7 @@ class ChoiceManager(models.Manager):
         if errors:
             return (False, errors)
         else:
-            r = Restaurant.objects.get(id=rand_id)
+            r = Restaurant.objects.get(id=restaurant_ids[rand_id])
             if Choice.objects.filter(date=date, users=user).exists():
                 errors.append("You have already made your choice today!")
                 return (False, errors)
