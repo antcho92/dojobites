@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.urls import reverse
-from ..login_reg_app.models import User
+from ..login_register.models import User
 from .models import *
 from django.db.models import Count
 from datetime import datetime, timedelta

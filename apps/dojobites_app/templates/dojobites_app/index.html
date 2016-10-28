@@ -7,8 +7,10 @@
     <title>Dojo Bites</title>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     <script src="../../static/dojobites_app/js/jquery-3.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Roboto" rel="stylesheet">
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" href="{% static 'dojobites_app/css/styles.css' %}" media="screen">
+    <link rel="icon" href="{% static 'dojobites_app/images/favicon.ico' %}">
     <script>
         $(document).ready(function() {
             $('input#date').change(function() {
@@ -55,11 +57,12 @@
             }
         })
     </script>
-  </head>
-  <body>
-      <div id="container">
+</head>
+<body>
+    <div id="container">
         <header>
             <h1>Dojo Bites</h1>
+            <h2>Welcome! {{ user.first_name|title }}</h2>
             <div class="nav_bar">
                 <h4><a href="{% url 'bites:index' %}">Where to Eat?</a></h4>
                 <h4><a href="#">What's Nearby?</a></h4>
@@ -77,7 +80,6 @@
         </ul>
         {% endif %}
         <main>
-            <h3>Join a group! {{ user.first_name|title }}</h3>
             <div id="voting">
                 <div id="choice">
                     <form id="date" action="{% url 'bites:show_choice' %}" method="post"> {% csrf_token %}
