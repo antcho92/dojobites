@@ -44,8 +44,11 @@ def join_choice(request, choice_id):
     return HttpResponse('You made a choice!')
 
 
-def unjoin(request, restaurant_id):
-    return redirect(reverse('bites:index'))
+def unjoin(request, choice_id):
+    user = User.objects.get(id=request.session['user_id'])
+    choice = Choice.objects.get(id=choice_id)
+    choice.users.remove(user)
+    return HttpResponse('You left the group!')
 
 def comment(request):
     if request.method=='POST':
