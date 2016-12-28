@@ -2,6 +2,7 @@
 coding dojo project for finding where to eat lunch with friends
 
 functionalities to implement:
+
 1. list of lunch options near codingdojo - done
 2. voting ability for users (with random option)
 3. message board, need to link to date
@@ -14,6 +15,7 @@ functionalities to implement:
 10. option information hover
 
 functions already implemented:
+
 1. login and registration
 2. added restaurant submission page
 
